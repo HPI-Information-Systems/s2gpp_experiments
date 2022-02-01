@@ -1,2 +1,3 @@
 git+https://github.com/HPI-Information-Systems/TimeEval
 git+https://github.com/HPI-Information-Systems/gutentag
+scikit-optimize

@@ -7,7 +7,7 @@ import pandas as pd
 from timeeval import Metric
 from timeeval.adapters import DockerAdapter
 
-from hyperopt import PostMethod
+from .algorithms import PostMethod
 
 
 def calculate_metric(post_method: PostMethod, args: Dict, dataset: Path) -> float:
@@ -22,7 +22,6 @@ def func(algorithm: DockerAdapter, post_method: PostMethod, dataset: Path, param
     try:
         with TemporaryDirectory(dir="../") as tmpdirname:
             result_file = Path(tmpdirname)
-            print(result_file)
             args = {
                 "results_path": result_file,
                 "hyper_params": {

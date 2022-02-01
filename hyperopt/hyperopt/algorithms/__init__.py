@@ -11,8 +11,8 @@ PostMethod = Callable[[np.ndarray, Dict], np.ndarray]
 Method = Tuple[DockerAdapter, Dict, PostMethod]
 
 
-def define_algorithms() -> List[Method]:
-    return [
+def define_algorithms(filters: List[str]) -> List[Method]:
+    algorithms = [
         (s2gpp(), {
             "pattern-length": (20, 150),
             "latent": (6, 50),
@@ -26,3 +26,8 @@ def define_algorithms() -> List[Method]:
             "stride": (1, 20)
         }, post_kmeans)
     ]
+
+    if len(filters) > 0:
+        algorithms = list(filter(lambda a: a[0].image_name in filters, algorithms))
+
+    return algorithms

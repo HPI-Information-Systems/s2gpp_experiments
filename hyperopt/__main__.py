@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 from typing import List, Optional
-from timeeval import DatasetManager, TrainingType
+from timeeval import DatasetManager, TrainingType, Metric
 
 from hyperopt.algorithms import define_algorithms
 from hyperopt import Hyperopt
@@ -22,9 +22,13 @@ def main(args: argparse.Namespace):
     algorithms = define_algorithms(args.algorithms)
     datasets = define_datasets(args.datasets, args.training_type)
 
-    opt = Hyperopt(algorithms, datasets, n_calls=args.hyperopt_calls)
-    opt.optimize()
-    opt.save_to_file(args.output_file)
+    opt = Hyperopt(algorithms, datasets, n_calls=args.hyperopt_calls, metric=args.metric)
+    try:
+        opt.optimize()
+        opt.save_to_file(args.output_file)
+    except KeyboardInterrupt:
+        print("Interrupted! Saving already calculated results!")
+        opt.save_to_file(args.output_file)
 
 
 def prepare_args() -> argparse.Namespace:
@@ -36,6 +40,7 @@ def prepare_args() -> argparse.Namespace:
     parser.add_argument("--dataset-dir", type=Path, default=Path("data/GutenTAG"), help="Directory holding datasets.csv")
     parser.add_argument("--output-file", type=Path, default=Path("./results.json"), help="Path for json output")
     parser.add_argument("--training-type", type=TrainingType, required=False)
+    parser.add_argument("--metric", type=lambda m: Metric(int(m)), default=Metric.ROC_AUC)
 
     return parser.parse_args(sys.argv[1:])
 

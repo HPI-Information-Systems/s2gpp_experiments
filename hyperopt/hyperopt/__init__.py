@@ -14,13 +14,15 @@ from .utils import func, suppress_stdout_stderr
 
 
 class Hyperopt:
-    def __init__(self, algorithms: List[Method], datasets: List[Path], n_calls: int = 10, verbose: bool = False, metric: Metric = Metric.ROC_AUC):
+    def __init__(self, algorithms: List[Method], datasets: List[Path], n_calls: int = 10, verbose: bool = False, metric: Metric = Metric.ROC_AUC, results_path: Optional[Path] = None):
         self.algorithms: List[Method] = algorithms
         self.datasets: List[Path] = datasets
         self.n_calls = n_calls
         self.verbose = verbose
         self.metric = metric
-        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
+        if results_path is not None:
+            self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
+            self._load_finished_results(results_path)
 
     def optimize(self):
         pb = tqdm.trange(len(self.algorithms) * len(self.datasets))
@@ -33,6 +35,14 @@ class Hyperopt:
                     pb.write("Error occurred! Continue with next optimization")
                     self._add_error_entry(algorithm, dataset)
                 pb.update(1)
+
+    def _load_finished_results(self, results_path: Path):
+        with results_path.open("r") as f:
+            finished_results = json.load(f)
+        for algorithm, datasets in finished_results.items():
+            for dataset, props in datasets.items():
+                self.results[algorithm][dataset]["score"] = props["score"]
+                self.results[algorithm][dataset]["location"] = props["location"]
 
     def _minimize(self, dataset: Path, method: Method):
         algorithm, params, post_method = method

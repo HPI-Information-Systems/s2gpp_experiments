@@ -9,8 +9,8 @@ from hyperopt.algorithms import define_algorithms
 from hyperopt import Hyperopt
 
 
-def define_datasets(filters: List[Path], training_type: Optional[TrainingType] = None, input_dimensionality: Optional[InputDimensionality] = None, sample_n: Optional[int] = None) -> List[Path]:
-    dm = DatasetManager("data/GutenTAG")
+def define_datasets(filters: List[Path], dataset_dir: Path, training_type: Optional[TrainingType] = None, input_dimensionality: Optional[InputDimensionality] = None, sample_n: Optional[int] = None) -> List[Path]:
+    dm = DatasetManager(dataset_dir)
     datasets = [dm.get_dataset_path(dataset_id) for dataset_id in dm.select(training_type=training_type, input_dimensionality=input_dimensionality)]
 
     if len(filters) > 0:
@@ -24,12 +24,12 @@ def define_datasets(filters: List[Path], training_type: Optional[TrainingType] =
 
 def main(args: argparse.Namespace):
     algorithms = define_algorithms(args.algorithms)
-    datasets = define_datasets(args.datasets, args.training_type, args.input_dimensionality, args.sample_n)
+    datasets = define_datasets(args.datasets, args.dataset_dir, args.training_type, args.input_dimensionality, args.sample_n)
 
-    opt = Hyperopt(algorithms, datasets, n_calls=args.hyperopt_calls, metric=args.metric)
+    opt = Hyperopt(algorithms, datasets, n_calls=args.hyperopt_calls, metric=args.metric, results_path=args.output_file if args.continues else None)
     try:
         opt.optimize()
-    except:
+    except KeyboardInterrupt:
         print("Interrupted! Saving already calculated results!")
     opt.save_to_file(args.output_file)
 
@@ -46,6 +46,8 @@ def prepare_args() -> argparse.Namespace:
     parser.add_argument("--training-type", type=TrainingType, required=False)
     parser.add_argument("--input-dimensionality", type=InputDimensionality, required=False)
     parser.add_argument("--sample-n", type=int, required=False)
+    parser.add_argument('--continue', dest='continue', action='store_true')
+    parser.set_defaults(continues=False)
 
     return parser.parse_args(sys.argv[1:])
 

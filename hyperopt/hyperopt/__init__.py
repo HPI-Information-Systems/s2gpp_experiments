@@ -1,6 +1,6 @@
 import numpy as np
 from pathlib import Path
-from typing import List, Dict, Union, Any, DefaultDict
+from typing import List, Dict, Union, Any, DefaultDict, Optional
 
 from timeeval import Metric
 
@@ -20,14 +20,18 @@ class Hyperopt:
         self.n_calls = n_calls
         self.verbose = verbose
         self.metric = metric
-        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[float, List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
+        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
 
     def optimize(self):
         pb = tqdm.trange(len(self.algorithms) * len(self.datasets))
         for algorithm in self.algorithms:
             for dataset in self.datasets:
-                with suppress_stdout_stderr():
-                    self._minimize(dataset, algorithm)
+                try:
+                    with suppress_stdout_stderr():
+                        self._minimize(dataset, algorithm)
+                except ValueError:
+                    pb.write("Error occurred! Continue with next optimization")
+                    self._add_error_entry(algorithm, dataset)
                 pb.update(1)
 
     def _minimize(self, dataset: Path, method: Method):
@@ -38,6 +42,10 @@ class Hyperopt:
 
         self.results[algorithm.image_name][str(dataset)]["score"] = -result["fun"]
         self.results[algorithm.image_name][str(dataset)]["location"] = [int(x) if type(x) == np.int64 else x for x in result["x"]]
+
+    def _add_error_entry(self, algorithm: Method, dataset: Path):
+        self.results[algorithm[0].image_name][str(dataset)]["score"] = None
+        self.results[algorithm[0].image_name][str(dataset)]["location"] = []
 
     def save_to_file(self, path: Path):
         with path.open("w") as f:

@@ -1,1 +1,3 @@
+timeeval@git+https://github.com/HPI-Information-Systems/TimeEval@main
+gutenTAG@git+https://github.com/HPI-Information-Systems/gutentag@main
 scikit-optimize

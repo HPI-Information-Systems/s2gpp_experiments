@@ -1,0 +1,941 @@
+$schema: "generation-config-schema/guten-tag-generation-config.schema.yaml"
+
+# bo-type-period_len-anomaly_len
+
+base:
+  - &base-ts
+    length: 10000
+    channels: 1
+  - &base-osci
+    frequency: 0.25
+    amplitude: 1.0
+    variance: 0.05
+
+sine:
+  - &sine-ts
+    kind: sine
+    <<: *base-osci
+    <<: *base-ts
+  - &sine-025
+    frequency: 0.25
+    <<: *sine-ts
+  - &sine-05
+    frequency: 0.5
+    <<: *sine-ts
+  - &sine-1
+    frequency: 1
+    <<: *sine-ts
+  - &sine-2
+    frequency: 2
+    <<: *sine-ts
+  - &sine-4
+    frequency: 4
+    <<: *sine-ts
+  - &sine-8
+    frequency: 8
+    <<: *sine-ts
+
+ecg:
+  - &ecg-ts
+    kind: ecg
+    <<: *base-osci
+    <<: *base-ts
+  - &ecg-025
+    frequency: 0.25
+    <<: *ecg-ts
+  - &ecg-05
+    frequency: 0.5
+    <<: *ecg-ts
+  - &ecg-1
+    frequency: 1
+    <<: *ecg-ts
+  - &ecg-2
+    frequency: 2
+    <<: *ecg-ts
+  - &ecg-4
+    frequency: 4
+    <<: *ecg-ts
+  - &ecg-8
+    frequency: 8
+    <<: *ecg-ts
+
+# anomalies
+anomaly_kinds:
+  - &frequency
+    length: 100
+    kinds:
+      - kind: "frequency"
+        parameters:
+          frequency_factor: 2.0
+  - &mean
+    length: 100
+    kinds:
+      - kind: "mean"
+        parameters:
+          offset: 1.0
+  - &pattern
+    length: 100
+    kinds:
+      - kind: "pattern"
+        parameters:
+          sinusoid_k: 10.0
+          cbf_pattern_factor: 2
+  - &platform
+    length: 100
+    kinds:
+      - kind: "platform"
+        parameters:
+          value: 0.0
+  - &variance
+    length: 100
+    kinds:
+      - kind: "variance"
+        parameters:
+          variance: 0.3
+  - &amplitude
+    kinds:
+      - kind: "amplitude"
+        parameters:
+          amplitude_factor: 2
+
+timeseries:
+  - name: sine-amplitude-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: sine-amplitude-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-2
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: sine-amplitude-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-4
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: sine-amplitude-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-8
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: sine-amplitude-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 50
+  - name: sine-amplitude-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 100
+  - name: sine-amplitude-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 150
+  - name: sine-amplitude-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 200
+  - name: sine-amplitude-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 250
+  - name: sine-amplitude-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *amplitude
+        length: 300
+  - name: sine-variance-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: sine-variance-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-2
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: sine-variance-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-4
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: sine-variance-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-8
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: sine-variance-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 50
+  - name: sine-variance-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 100
+  - name: sine-variance-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 150
+  - name: sine-variance-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 200
+  - name: sine-variance-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 250
+  - name: sine-variance-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *variance
+        length: 300
+  - name: sine-frequency-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: sine-frequency-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-2
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: sine-frequency-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-4
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: sine-frequency-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-8
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: sine-frequency-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 50
+  - name: sine-frequency-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 100
+  - name: sine-frequency-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 150
+  - name: sine-frequency-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 200
+  - name: sine-frequency-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 250
+  - name: sine-frequency-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *frequency
+        length: 300
+  - name: sine-mean-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: sine-mean-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-2
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: sine-mean-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-4
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: sine-mean-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-8
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: sine-mean-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 50
+  - name: sine-mean-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 100
+  - name: sine-mean-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 150
+  - name: sine-mean-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 200
+  - name: sine-mean-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 250
+  - name: sine-mean-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *mean
+        length: 300
+  - name: sine-pattern-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: sine-pattern-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-2
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: sine-pattern-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-4
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: sine-pattern-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-8
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: sine-pattern-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 50
+  - name: sine-pattern-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 100
+  - name: sine-pattern-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 150
+  - name: sine-pattern-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 200
+  - name: sine-pattern-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 250
+  - name: sine-pattern-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *pattern
+        length: 300
+  - name: sine-platform-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: sine-platform-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-2
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: sine-platform-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-4
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: sine-platform-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *sine-8
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: sine-platform-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 50
+  - name: sine-platform-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 100
+  - name: sine-platform-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 150
+  - name: sine-platform-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 200
+  - name: sine-platform-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 250
+  - name: sine-platform-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *sine-1
+    anomalies:
+      - <<: *platform
+        length: 300
+  - name: ecg-amplitude-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: ecg-amplitude-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-2
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: ecg-amplitude-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-4
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: ecg-amplitude-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-8
+    anomalies:
+      - <<: *amplitude
+        length: 10
+  - name: ecg-amplitude-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 50
+  - name: ecg-amplitude-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 100
+  - name: ecg-amplitude-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 150
+  - name: ecg-amplitude-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 200
+  - name: ecg-amplitude-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 250
+  - name: ecg-amplitude-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *amplitude
+        length: 300
+  - name: ecg-variance-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: ecg-variance-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-2
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: ecg-variance-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-4
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: ecg-variance-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-8
+    anomalies:
+      - <<: *variance
+        length: 10
+  - name: ecg-variance-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 50
+  - name: ecg-variance-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 100
+  - name: ecg-variance-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 150
+  - name: ecg-variance-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 200
+  - name: ecg-variance-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 250
+  - name: ecg-variance-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *variance
+        length: 300
+  - name: ecg-frequency-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: ecg-frequency-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-2
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: ecg-frequency-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-4
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: ecg-frequency-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-8
+    anomalies:
+      - <<: *frequency
+        length: 10
+  - name: ecg-frequency-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 50
+  - name: ecg-frequency-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 100
+  - name: ecg-frequency-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 150
+  - name: ecg-frequency-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 200
+  - name: ecg-frequency-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 250
+  - name: ecg-frequency-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *frequency
+        length: 300
+  - name: ecg-mean-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: ecg-mean-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-2
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: ecg-mean-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-4
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: ecg-mean-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-8
+    anomalies:
+      - <<: *mean
+        length: 10
+  - name: ecg-mean-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 50
+  - name: ecg-mean-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 100
+  - name: ecg-mean-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 150
+  - name: ecg-mean-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 200
+  - name: ecg-mean-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 250
+  - name: ecg-mean-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *mean
+        length: 300
+  - name: ecg-pattern-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: ecg-pattern-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-2
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: ecg-pattern-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-4
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: ecg-pattern-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-8
+    anomalies:
+      - <<: *pattern
+        length: 10
+  - name: ecg-pattern-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 50
+  - name: ecg-pattern-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 100
+  - name: ecg-pattern-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 150
+  - name: ecg-pattern-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 200
+  - name: ecg-pattern-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 250
+  - name: ecg-pattern-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *pattern
+        length: 300
+  - name: ecg-platform-1-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: ecg-platform-2-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-2
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: ecg-platform-4-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-4
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: ecg-platform-8-10
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-8
+    anomalies:
+      - <<: *platform
+        length: 10
+  - name: ecg-platform-1-50
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 50
+  - name: ecg-platform-1-100
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 100
+  - name: ecg-platform-1-150
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 150
+  - name: ecg-platform-1-200
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 200
+  - name: ecg-platform-1-250
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 250
+  - name: ecg-platform-1-300
+    length: 10000
+    base-oscillations:
+      - <<: *ecg-1
+    anomalies:
+      - <<: *platform
+        length: 300

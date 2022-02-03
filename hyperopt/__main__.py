@@ -46,7 +46,7 @@ def prepare_args() -> argparse.Namespace:
     parser.add_argument("--training-type", type=TrainingType, required=False)
     parser.add_argument("--input-dimensionality", type=InputDimensionality, required=False)
     parser.add_argument("--sample-n", type=int, required=False)
-    parser.add_argument('--continue', dest='continue', action='store_true')
+    parser.add_argument('--continue', dest='continues', action='store_true')
     parser.set_defaults(continues=False)
 
     return parser.parse_args(sys.argv[1:])

@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 from pathlib import Path
 from typing import List, Dict, Union, Any, DefaultDict, Optional
@@ -20,21 +22,24 @@ class Hyperopt:
         self.n_calls = n_calls
         self.verbose = verbose
         self.metric = metric
+        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
         if results_path is not None:
-            self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
             self._load_finished_results(results_path)
 
     def optimize(self):
         pb = tqdm.trange(len(self.algorithms) * len(self.datasets))
+        pb.update(self._count_results())
+        time.sleep(1)
         for algorithm in self.algorithms:
             for dataset in self.datasets:
-                try:
-                    with suppress_stdout_stderr():
-                        self._minimize(dataset, algorithm)
-                except ValueError:
-                    pb.write("Error occurred! Continue with next optimization")
-                    self._add_error_entry(algorithm, dataset)
-                pb.update(1)
+                if self._combination_not_yet_done(algorithm, dataset):
+                    try:
+                        with suppress_stdout_stderr():
+                            self._minimize(dataset, algorithm)
+                    except ValueError:
+                        pb.write("Error occurred! Continue with next optimization")
+                        self._add_error_entry(algorithm, dataset)
+                    pb.update(1)
 
     def _load_finished_results(self, results_path: Path):
         with results_path.open("r") as f:
@@ -43,6 +48,19 @@ class Hyperopt:
             for dataset, props in datasets.items():
                 self.results[algorithm][dataset]["score"] = props["score"]
                 self.results[algorithm][dataset]["location"] = props["location"]
+
+    def _combination_not_yet_done(self, algorithm: Method, dataset: Path) -> bool:
+        algorithm_name = algorithm[0].image_name
+        if algorithm_name in self.results:
+            if str(dataset) in self.results[algorithm_name]:
+                return False
+        return True
+
+    def _count_results(self) -> int:
+        count = 0
+        for _algorithm, datasets in self.results.items():
+            count += len(datasets)
+        return count
 
     def _minimize(self, dataset: Path, method: Method):
         algorithm, params, post_method = method

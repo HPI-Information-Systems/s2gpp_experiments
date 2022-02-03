@@ -23,7 +23,7 @@ def define_datasets(filters: List[Path], dataset_dir: Path, training_type: Optio
 
 
 def main(args: argparse.Namespace):
-    algorithms = define_algorithms(args.algorithms)
+    algorithms = define_algorithms(args.algorithms, args.dataset_dir)
     datasets = define_datasets(args.datasets, args.dataset_dir, args.training_type, args.input_dimensionality, args.sample_n)
 
     opt = Hyperopt(algorithms, datasets, n_calls=args.hyperopt_calls, metric=args.metric, results_path=args.output_file if args.continues else None)

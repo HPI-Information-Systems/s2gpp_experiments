@@ -5,8 +5,9 @@ from pathlib import Path
 from typing import List, Dict, Union, Any, DefaultDict, Optional
 
 from timeeval import Metric
+from timeeval.adapters import DockerAdapter
 
-from .algorithms import Method, PostMethod
+from .algorithms import Method, PostMethod, Heuristics
 from skopt import gp_minimize
 from collections import defaultdict
 import json
@@ -63,13 +64,23 @@ class Hyperopt:
         return count
 
     def _minimize(self, dataset: Path, method: Method):
-        algorithm, params, post_method = method
+        algorithm, params, post_method, heuristics = method
         param_names, params = zip(*params.items())
 
-        result = gp_minimize(lambda p: func(algorithm, post_method, dataset, param_names, self.metric, *p), params, n_calls=self.n_calls)
+        result = gp_minimize(lambda p: self._call_heuristics(algorithm, post_method, dataset, param_names, heuristics, *p), params, n_calls=self.n_calls)
 
         self.results[algorithm.image_name][str(dataset)]["score"] = -result["fun"]
         self.results[algorithm.image_name][str(dataset)]["location"] = [int(x) if type(x) == np.int64 else x for x in result["x"]]
+
+    def _call_heuristics(self, algorithm: DockerAdapter, post_method: PostMethod, dataset: Path, param_names: List[str], heuristics: Heuristics, *params) -> float:
+        new_params = {
+            name: p
+            for name, p in zip(param_names, params)
+        }
+        for name, p in zip(param_names, params):
+            new_params[name] = heuristics.get(name, lambda p, a: a[name])(dataset, new_params)
+
+        return func(algorithm, post_method, dataset, param_names, self.metric, *[new_params[n] for n in param_names])
 
     def _add_error_entry(self, algorithm: Method, dataset: Path):
         self.results[algorithm[0].image_name][str(dataset)]["score"] = None

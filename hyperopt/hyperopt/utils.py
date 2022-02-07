@@ -1,3 +1,5 @@
+import re
+from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Dict, List
@@ -42,4 +44,12 @@ def suppress_stdout_stderr():
     """A context manager that redirects stdout and stderr to devnull"""
     with open(devnull, 'w') as fnull:
         with redirect_stderr(fnull) as err, redirect_stdout(fnull) as out:
+            yield (err, out)
+
+
+@contextmanager
+def get_stdout(buf: StringIO):
+    """A context manager that redirects stdout and stderr to devnull"""
+    with open(devnull, 'w') as fnull:
+        with redirect_stderr(fnull) as err, redirect_stdout(buf) as out:
             yield (err, out)

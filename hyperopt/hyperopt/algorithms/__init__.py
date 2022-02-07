@@ -19,9 +19,9 @@ Method = Tuple[DockerAdapter, Dict, PostMethod, Heuristics]
 def define_algorithms(filters: List[str], dataset_dir: Path) -> List[Method]:
     algorithms = [
         (s2gpp(), {
-            "pattern-length": (0.1, 2.0),
-            "latent": (0.05, 1),
-            "query-length": (0.5, 3.0),
+            "pattern-length": (0.1, 5.0),
+            "latent": (0.01, 1.0),
+            "query-length": [1.5],
             "rate": [100]
         }, post_s2gpp, {
             "pattern-length": DatasetAttrHeuristic(dataset_dir, attr="period_size", param="pattern-length", dtype=int),

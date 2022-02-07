@@ -1,91 +1,27 @@
-import time
-
-import numpy as np
-from pathlib import Path
-from typing import List, Dict, Union, Any, DefaultDict, Optional
-
-from timeeval import Metric
-from timeeval.adapters import DockerAdapter
+from enum import Enum
+from typing import Type
 
 from .algorithms import Method, PostMethod, Heuristics
-from skopt import gp_minimize
-from collections import defaultdict
-import json
-import tqdm
-
+from .from_results import FromResults
+from .no_opt import NoHyperopt
 from .utils import func, suppress_stdout_stderr
+from .base import BaseHyperopt
+from .per_dataset import PerDatasetHyperopt
+from .whole_collection import WholeCollectionHyperopt
 
 
-class Hyperopt:
-    def __init__(self, algorithms: List[Method], datasets: List[Path], n_calls: int = 10, verbose: bool = False, metric: Metric = Metric.ROC_AUC, results_path: Optional[Path] = None):
-        self.algorithms: List[Method] = algorithms
-        self.datasets: List[Path] = datasets
-        self.n_calls = n_calls
-        self.verbose = verbose
-        self.metric = metric
-        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
-        if results_path is not None:
-            self._load_finished_results(results_path)
+class HyperoptMode(Enum):
+    PER_DATASET = "per_dataset"
+    WHOLE_COLLECTION = "whole_collection"
+    NO_OPT = "no_opt"
+    FROM_RESULTS = "from_results"
 
-    def optimize(self):
-        pb = tqdm.trange(len(self.algorithms) * len(self.datasets))
-        pb.update(self._count_results())
-        time.sleep(1)
-        for algorithm in self.algorithms:
-            for dataset in self.datasets:
-                if self._combination_not_yet_done(algorithm, dataset):
-                    try:
-                        with suppress_stdout_stderr():
-                            self._minimize(dataset, algorithm)
-                    except ValueError:
-                        pb.write("Error occurred! Continue with next optimization")
-                        self._add_error_entry(algorithm, dataset)
-                    pb.update(1)
-
-    def _load_finished_results(self, results_path: Path):
-        with results_path.open("r") as f:
-            finished_results = json.load(f)
-        for algorithm, datasets in finished_results.items():
-            for dataset, props in datasets.items():
-                self.results[algorithm][dataset]["score"] = props["score"]
-                self.results[algorithm][dataset]["location"] = props["location"]
-
-    def _combination_not_yet_done(self, algorithm: Method, dataset: Path) -> bool:
-        algorithm_name = algorithm[0].image_name
-        if algorithm_name in self.results:
-            if str(dataset) in self.results[algorithm_name]:
-                return False
-        return True
-
-    def _count_results(self) -> int:
-        count = 0
-        for _algorithm, datasets in self.results.items():
-            count += len(datasets)
-        return count
-
-    def _minimize(self, dataset: Path, method: Method):
-        algorithm, params, post_method, heuristics = method
-        param_names, params = zip(*params.items())
-
-        result = gp_minimize(lambda p: self._call_heuristics(algorithm, post_method, dataset, param_names, heuristics, *p), params, n_calls=self.n_calls)
-
-        self.results[algorithm.image_name][str(dataset)]["score"] = -result["fun"]
-        self.results[algorithm.image_name][str(dataset)]["location"] = [int(x) if type(x) == np.int64 else x for x in result["x"]]
-
-    def _call_heuristics(self, algorithm: DockerAdapter, post_method: PostMethod, dataset: Path, param_names: List[str], heuristics: Heuristics, *params) -> float:
-        new_params = {
-            name: p
-            for name, p in zip(param_names, params)
-        }
-        for name, p in zip(param_names, params):
-            new_params[name] = heuristics.get(name, lambda p, a: a[name])(dataset, new_params)
-
-        return func(algorithm, post_method, dataset, param_names, self.metric, *[new_params[n] for n in param_names])
-
-    def _add_error_entry(self, algorithm: Method, dataset: Path):
-        self.results[algorithm[0].image_name][str(dataset)]["score"] = None
-        self.results[algorithm[0].image_name][str(dataset)]["location"] = []
-
-    def save_to_file(self, path: Path):
-        with path.open("w") as f:
-            json.dump(self.results, f)
+    def get_hyperopt(self) -> Type[BaseHyperopt]:
+        if self == HyperoptMode.PER_DATASET:
+            return PerDatasetHyperopt
+        elif self == HyperoptMode.NO_OPT:
+            return NoHyperopt
+        elif self == HyperoptMode.FROM_RESULTS:
+            return FromResults
+        else:  # if self == HyperoptMode.WHOLE_COLLECTION
+            return WholeCollectionHyperopt

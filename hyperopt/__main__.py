@@ -6,7 +6,7 @@ from typing import List, Optional
 from timeeval import DatasetManager, TrainingType, Metric, InputDimensionality
 
 from hyperopt.algorithms import define_algorithms
-from hyperopt import Hyperopt
+from hyperopt import PerDatasetHyperopt, HyperoptMode
 
 
 def define_datasets(filters: List[Path], dataset_dir: Path, training_type: Optional[TrainingType] = None, input_dimensionality: Optional[InputDimensionality] = None, sample_n: Optional[int] = None) -> List[Path]:
@@ -26,12 +26,14 @@ def main(args: argparse.Namespace):
     algorithms = define_algorithms(args.algorithms, args.dataset_dir)
     datasets = define_datasets(args.datasets, args.dataset_dir, args.training_type, args.input_dimensionality, args.sample_n)
 
-    opt = Hyperopt(algorithms, datasets, n_calls=args.hyperopt_calls, metric=args.metric, results_path=args.output_file if args.continues else None)
+    opt_class = args.mode.get_hyperopt()
+    opt = opt_class(algorithms, datasets, n_calls=args.hyperopt_calls, metric=args.metric, results_path=args.output_file if args.continues else None)
     try:
         opt.optimize()
     except KeyboardInterrupt:
         print("Interrupted! Saving already calculated results!")
     opt.save_to_file(args.output_file)
+    opt.finalize()
 
 
 def prepare_args() -> argparse.Namespace:
@@ -46,6 +48,7 @@ def prepare_args() -> argparse.Namespace:
     parser.add_argument("--training-type", type=TrainingType, required=False)
     parser.add_argument("--input-dimensionality", type=InputDimensionality, required=False)
     parser.add_argument("--sample-n", type=int, required=False)
+    parser.add_argument("--mode", type=HyperoptMode, default=HyperoptMode.PER_DATASET)
     parser.add_argument('--continue', dest='continues', action='store_true')
     parser.set_defaults(continues=False)
 

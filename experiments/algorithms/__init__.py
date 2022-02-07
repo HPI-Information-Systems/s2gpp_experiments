@@ -3,13 +3,13 @@ from typing import Callable, Dict, Tuple, List, Any
 
 import numpy as np
 from timeeval.adapters import DockerAdapter
-from .s2gpp import s2gpp, post_s2gpp
+from .s2gpp import s2gpp, post_s2gpp, get_hyperopt_params
 from .kmeans import kmeans, post_kmeans
 from .torsk import torsk, _post_torsk
 from .dbstream import dbstream, post_dbstream
-from ..heuristics import Heuristic
-from ..heuristics.dataset_attr import DatasetAttrHeuristic
-from ..heuristics.sibling import SiblingHeuristic
+from experiments.hyperopt.heuristics import Heuristic
+from experiments.hyperopt.heuristics.dataset_attr import DatasetAttrHeuristic
+from experiments.hyperopt.heuristics.sibling import SiblingHeuristic
 
 PostMethod = Callable[[np.ndarray, Dict], np.ndarray]
 Heuristics = Dict[str, Heuristic]
@@ -17,12 +17,13 @@ Method = Tuple[DockerAdapter, Dict, PostMethod, Heuristics]
 
 
 def define_algorithms(filters: List[str], dataset_dir: Path) -> List[Method]:
+    s2gpp_params = get_hyperopt_params()
     algorithms = [
         (s2gpp(), {
-            "pattern-length": (0.1, 5.0),
-            "latent": (0.01, 1.0),
-            "query-length": [1.5],
-            "rate": [100]
+            "pattern-length": [s2gpp_params[0]],
+            "latent": [s2gpp_params[1]],
+            "query-length": [s2gpp_params[2]],
+            "rate": [s2gpp_params[3]]
         }, post_s2gpp, {
             "pattern-length": DatasetAttrHeuristic(dataset_dir, attr="period_size", param="pattern-length", dtype=int),
             "latent": SiblingHeuristic(dataset_dir, sibling="pattern-length", param="latent", dtype=int),

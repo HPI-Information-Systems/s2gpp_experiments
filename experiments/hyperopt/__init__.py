@@ -1,7 +1,6 @@
 from enum import Enum
 from typing import Type
 
-from .algorithms import Method, PostMethod, Heuristics
 from .from_results import FromResults
 from .no_opt import NoHyperopt
 from .utils import func, suppress_stdout_stderr

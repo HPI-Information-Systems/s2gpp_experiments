@@ -6,9 +6,9 @@ from timeeval.adapters import DockerAdapter
 from tqdm import trange
 import time
 
-from .algorithms import Method, PostMethod, Heuristics
+from ..algorithms import Method, PostMethod, Heuristics
 from .base import BaseHyperopt
-from .utils import suppress_stdout_stderr, func
+from ..utils import suppress_stdout_stderr, func
 
 
 class WholeCollectionHyperopt(BaseHyperopt):

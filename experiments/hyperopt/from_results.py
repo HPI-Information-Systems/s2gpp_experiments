@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import trange
 import time, os
 
-from .algorithms import Method
+from ..algorithms import Method
 from .base import BaseHyperopt
 from .utils import get_stdout
 

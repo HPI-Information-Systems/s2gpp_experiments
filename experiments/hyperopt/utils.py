@@ -1,4 +1,3 @@
-import re
 from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -11,7 +10,7 @@ import pandas as pd
 from timeeval import Metric
 from timeeval.adapters import DockerAdapter
 
-from .algorithms import PostMethod
+from ..algorithms import PostMethod
 
 
 def calculate_metric(post_method: PostMethod, args: Dict, dataset: Path, metric: Metric) -> float:
@@ -37,14 +36,6 @@ def func(algorithm: DockerAdapter, post_method: PostMethod, dataset: Path, param
             return calculate_metric(post_method, args, dataset, metric)
     except:
         return 0.0
-
-
-@contextmanager
-def suppress_stdout_stderr():
-    """A context manager that redirects stdout and stderr to devnull"""
-    with open(devnull, 'w') as fnull:
-        with redirect_stderr(fnull) as err, redirect_stdout(fnull) as out:
-            yield (err, out)
 
 
 @contextmanager

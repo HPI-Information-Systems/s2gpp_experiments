@@ -1,4 +1,4 @@
-import abc, os
+import abc
 from collections import defaultdict
 from pathlib import Path
 from typing import List, Any, Optional, Union, Dict, DefaultDict
@@ -6,7 +6,7 @@ from typing import List, Any, Optional, Union, Dict, DefaultDict
 from timeeval import Metric
 from timeeval.adapters import DockerAdapter
 
-from .algorithms import Method, PostMethod, Heuristics
+from experiments.algorithms import Method, PostMethod, Heuristics
 from .utils import func
 import json
 

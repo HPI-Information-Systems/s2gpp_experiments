@@ -7,7 +7,6 @@ import numpy as np
 from tqdm import trange
 import time, os
 
-from ..algorithms import Method
 from .base import BaseHyperopt
 from .utils import get_stdout
 
@@ -34,7 +33,7 @@ class FromResults(BaseHyperopt):
                         self._add_error_entry(algorithm, dataset)
                     pb.update(1)
 
-    def from_results(self, dataset: Path, method: Method):
+    def from_results(self, dataset: Path, method: 'Method'):
         algorithm, params, post_method, heuristics = method
         param_names, _ = zip(*params.items())
         params = self.loaded_results["mut:5000/akita/s2gpp"][str(dataset)]["location"]
@@ -49,6 +48,6 @@ class FromResults(BaseHyperopt):
         self.results[algorithm.image_name][str(dataset)]["transitions"] = n_trans
         self.results[algorithm.image_name][str(dataset)]["location"] = [int(x) if type(x) == np.int64 else x for x in params]
 
-    def _add_error_entry(self, algorithm: Method, dataset: os.PathLike):
+    def _add_error_entry(self, algorithm: 'Method', dataset: os.PathLike):
         self.results[algorithm[0].image_name][str(dataset)]["transitions"] = []
         self.results[algorithm[0].image_name][str(dataset)]["location"] = []

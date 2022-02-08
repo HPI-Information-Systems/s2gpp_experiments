@@ -3,24 +3,133 @@ import logging
 import random
 import shutil
 import sys
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Any, Optional
 
 import numpy as np
 from durations import Duration
 
-from timeeval import TimeEval, DatasetManager
+from timeeval import TimeEval, DatasetManager, Algorithm, TrainingType, InputDimensionality
+from timeeval.adapters import DockerAdapter
 from timeeval.constants import HPI_CLUSTER
-from timeeval.params import FixedParameters
+from timeeval.params import FixedParameters, ParameterConfig
 from timeeval.remote import RemoteConfiguration
 from timeeval.resource_constraints import ResourceConstraints, GB
 from timeeval.utils.metrics import Metric
+from timeeval.utils.window import ReverseWindowing
 from timeeval_experiments.algorithm_configurator import AlgorithmConfigurator
 from timeeval_experiments.algorithms import *
 
 
-# Setup logging
-from experiments.algorithms.mstamp import mstamp
-from experiments.algorithms.s2gpp import s2gpp_timeeval
+"""
+############## mSTAMP
+"""
+
+def post_mstamp(scores: np.ndarray, args: dict) -> np.ndarray:
+    window_size = args.get("hyper_params", {}).get("anomaly_window_size", 50)
+    return ReverseWindowing(window_size=window_size).fit_transform(scores)
+
+
+_mstamp_parameters: Dict[str, Dict[str, Any]] = {
+    "anomaly_window_size": {
+        "defaultValue": 30,
+        "description": "Size of the sliding window.",
+        "name": "anomaly_window_size",
+        "type": "Int"
+    },
+    "random_state": {
+        "defaultValue": 42,
+        "description": "Seed for random number generation.",
+        "name": "random_state",
+        "type": "Int"
+    }
+}
+
+
+def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
+    return Algorithm(
+        name="mSTAMP",
+        main=DockerAdapter(
+            image_name="mut:5000/akita/mstamp",
+            tag="799da4dc",
+            skip_pull=skip_pull,
+            timeout=timeout,
+            group_privileges="akita",
+        ),
+        preprocess=None,
+        postprocess=post_mstamp,
+        param_schema=_mstamp_parameters,
+        param_config=params or ParameterConfig.defaults(),
+        data_as_file=True,
+        training_type=TrainingType.UNSUPERVISED,
+        input_dimensionality=InputDimensionality("multivariate")
+    )
+
+
+"""
+############## s2gpp
+"""
+
+def post_s2gpp(scores: np.ndarray, args: dict) -> np.ndarray:
+    pattern_length = args.get("hyper_params", {}).get("pattern-length", 50)
+    query_length = args.get("hyper_params", {}).get("query-length", 75)
+    size = pattern_length + query_length
+    return ReverseWindowing(window_size=size).fit_transform(scores)
+
+
+_s2gpp_parameters: Dict[str, Dict[str, Any]] = {
+    "pattern-length": {
+        "name": "pattern-length",
+        "type": "Int",
+        "defaultValue": 50,
+        "description": "Size of the sliding window, independent of anomaly length, but should in the best case be larger."
+    },
+    "latent": {
+        "name": "latent",
+        "type": "Int",
+        "defaultValue": 16,
+        "description": "Size of latent embedding space. This space is the input for the PCA calculation afterwards."
+    },
+    "rate": {
+        "name": "rate",
+        "type": "Int",
+        "defaultValue": 100,
+        "description": "Number of angles used to extract pattern nodes. A higher value will lead to high precision, but at the cost of increased computation time."
+    },
+    "threads": {
+        "name": "threads",
+        "type": "Int",
+        "defaultValue": 1,
+        "description": "Number of helper threads started besides the main thread. (min=1)"
+    },
+    "query-length": {
+        "name": "query-length",
+        "type": "Int",
+        "defaultValue": 75,
+        "description": "Size of the sliding windows used to find anomalies (query subsequences). query-length must be >= pattern-length!"
+    }
+}
+
+
+def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
+    return Algorithm(
+        name=name,
+        main=DockerAdapter(
+            image_name="mut:5000/akita/s2gpp",
+            tag="0.3.2",
+            skip_pull=skip_pull,
+            timeout=timeout,
+            group_privileges="akita",
+        ),
+        preprocess=None,
+        postprocess=post_s2gpp,
+        param_schema=_s2gpp_parameters,
+        param_config=params or ParameterConfig.defaults(),
+        data_as_file=True,
+        training_type=TrainingType.UNSUPERVISED,
+        input_dimensionality=InputDimensionality("multivariate")
+    )
+
+
 
 logging.basicConfig(
     filename="timeeval.log",

@@ -8,7 +8,8 @@ import time
 
 from ..algorithms import Method, PostMethod, Heuristics
 from .base import BaseHyperopt
-from ..utils import suppress_stdout_stderr, func
+from .utils import func
+from ..utils import suppress_stdout_stderr
 
 
 class WholeCollectionHyperopt(BaseHyperopt):

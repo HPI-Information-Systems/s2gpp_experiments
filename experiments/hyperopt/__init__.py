@@ -3,7 +3,6 @@ from typing import Type
 
 from .from_results import FromResults
 from .no_opt import NoHyperopt
-from .utils import func, suppress_stdout_stderr
 from .base import BaseHyperopt
 from .per_dataset import PerDatasetHyperopt
 from .whole_collection import WholeCollectionHyperopt

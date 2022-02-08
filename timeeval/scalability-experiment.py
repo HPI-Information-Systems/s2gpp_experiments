@@ -38,7 +38,7 @@ MIN_ANOMALIES = 1
 
 def main():
     dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
-    configurator = AlgorithmConfigurator(config_path="param-config.json")
+    configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
     datasets: List[Tuple[str, str]] = [d for d in dm.select() if d[1] == "ecg-10000-1"]

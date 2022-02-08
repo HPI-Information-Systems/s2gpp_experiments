@@ -8,7 +8,7 @@ from typing import List, Tuple
 import numpy as np
 from durations import Duration
 
-from timeeval import TimeEval, Datasets, TrainingType
+from timeeval import TimeEval, DatasetManager
 from timeeval.constants import HPI_CLUSTER
 from timeeval.params import FixedParameters
 from timeeval.remote import RemoteConfiguration
@@ -37,7 +37,7 @@ MIN_ANOMALIES = 1
 
 
 def main():
-    dm = Datasets("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
+    dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
     configurator = AlgorithmConfigurator(config_path="param-config.json")
 
     # Select datasets and algorithms

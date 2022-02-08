@@ -37,7 +37,7 @@ MIN_ANOMALIES = 1
 
 
 def main():
-    dm = Datasets("/home/phillip.wenig/Datasets/haystack/", create_if_missing=False)
+    dm = Datasets("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
     configurator = AlgorithmConfigurator(config_path="param-config.json")
 
     # Select datasets and algorithms

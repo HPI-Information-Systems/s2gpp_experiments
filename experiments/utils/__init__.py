@@ -9,7 +9,7 @@ from timeeval import TrainingType, InputDimensionality, DatasetManager
 
 def define_datasets(filters: List[Path], dataset_dir: Path, training_type: Optional[TrainingType] = None, input_dimensionality: Optional[InputDimensionality] = None, sample_n: Optional[int] = None) -> List[Path]:
     dm = DatasetManager(dataset_dir)
-    datasets = [dm.get_dataset_path(dataset_id) for dataset_id in dm.select(training_type=training_type, input_dimensionality=input_dimensionality) if "sine" in dataset_id[1]]
+    datasets = [dm.get_dataset_path(dataset_id) for dataset_id in dm.select(training_type=training_type, input_dimensionality=input_dimensionality) if "ecg" in dataset_id[1]]
 
     if len(filters) > 0:
         datasets = list(filter(lambda d: d.parent.name in filters, datasets))

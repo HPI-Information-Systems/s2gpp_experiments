@@ -11,7 +11,7 @@ from .utils import get_docker_adapter
 
 def get_hyperopt_params() -> List:
     # return [2.7395792737617386, 0.08869210174190788, 1.5, 100] best median
-    return [1.0, 0.3, 1.5, 100]
+    return [1.3210416017417068, 0.7696339417210919, 1.5, 100]
 
 def post_s2gpp(scores: np.ndarray, args: dict) -> np.ndarray:
     pattern_length = args.get("hyper_params", {}).get("pattern-length", 50)
@@ -58,9 +58,9 @@ _s2gpp_parameters: Dict[str, Dict[str, Any]] = {
 }
 
 
-def s2gpp_timeeval(params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
+def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
     return Algorithm(
-        name="Series2Graph++",
+        name=name,
         main=DockerAdapter(
             image_name="mut:5000/akita/s2gpp",
             tag="0.3.2",

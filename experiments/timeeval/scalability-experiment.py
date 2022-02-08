@@ -19,6 +19,7 @@ from timeeval_experiments.algorithms import *
 
 
 # Setup logging
+from experiments.algorithms.mstamp import mstamp
 from experiments.algorithms.s2gpp import s2gpp_timeeval
 
 logging.basicConfig(
@@ -45,11 +46,28 @@ def main():
 
     algorithms = [
         s2gpp_timeeval(
+            "S2G++1p",
             params=FixedParameters({
                 "rate": 100,
                 "pattern-length": "heuristic:PeriodSizeHeuristic(factor=1.0, fb_value=50)",
                 "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)"
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "threads": 1
+            })
+        ),
+        s2gpp_timeeval(
+            "S2G++20p",
+            params=FixedParameters({
+                "rate": 100,
+                "pattern-length": "heuristic:PeriodSizeHeuristic(factor=1.0, fb_value=50)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "threads": 20
+            })
+        ),
+        mstamp(
+            params=FixedParameters({
+                "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
             })
         ),
         dbstream(),
@@ -61,7 +79,7 @@ def main():
     print(f"Selecting {len(algorithms)} algorithms")
 
     print("Configuring algorithms...")
-    configurator.configure(algorithms[1:], perform_search=False)
+    configurator.configure(algorithms[3:], perform_search=False)
 
     print("\nDatasets:")
     print("=====================================================================================")
@@ -89,7 +107,7 @@ def main():
         tasks_per_host=1,
         task_memory_limit=16*GB,
         train_fails_on_timeout=False,
-        train_timeout=Duration("2 hours"),
+        train_timeout=Duration("20 minutes"),
         execute_timeout=Duration("8 hours"),
     )
     timeeval = TimeEval(dm, datasets, algorithms,

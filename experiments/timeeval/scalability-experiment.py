@@ -105,9 +105,9 @@ def main():
     )
     limits = ResourceConstraints(
         tasks_per_host=1,
-        task_memory_limit=16*GB,
+        task_memory_limit=20*GB,
         train_fails_on_timeout=False,
-        train_timeout=Duration("20 minutes"),
+        train_timeout=Duration("1 hour"),
         execute_timeout=Duration("8 hours"),
     )
     timeeval = TimeEval(dm, datasets, algorithms,

@@ -41,7 +41,7 @@ def main():
     configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = [d for d in dm.select() if "ecg-10000-1" in d[1]]
+    datasets: List[Tuple[str, str]] = [d for d in dm.select() if "ecg-10000-1.unsupervised" == d[1]]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

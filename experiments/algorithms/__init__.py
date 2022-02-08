@@ -1,15 +1,14 @@
 from pathlib import Path
-from typing import Callable, Dict, Tuple, List, Any
+from typing import Callable, Dict, Tuple, List
 
 import numpy as np
 from timeeval.adapters import DockerAdapter
 from .s2gpp import s2gpp, post_s2gpp, get_hyperopt_params
 from .kmeans import kmeans, post_kmeans
-from .torsk import torsk, _post_torsk
 from .dbstream import dbstream, post_dbstream
-from experiments.hyperopt.heuristics import Heuristic
-from experiments.hyperopt.heuristics.dataset_attr import DatasetAttrHeuristic
-from experiments.hyperopt.heuristics.sibling import SiblingHeuristic
+from experiments.heuristics import Heuristic
+from experiments.heuristics.dataset_attr import DatasetAttrHeuristic
+from experiments.heuristics.sibling import SiblingHeuristic
 
 PostMethod = Callable[[np.ndarray, Dict], np.ndarray]
 Heuristics = Dict[str, Heuristic]

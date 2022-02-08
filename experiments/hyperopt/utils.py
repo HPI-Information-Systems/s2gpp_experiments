@@ -10,10 +10,8 @@ import pandas as pd
 from timeeval import Metric
 from timeeval.adapters import DockerAdapter
 
-from ..algorithms import PostMethod
 
-
-def calculate_metric(post_method: PostMethod, args: Dict, dataset: Path, metric: Metric) -> float:
+def calculate_metric(post_method: 'PostMethod', args: Dict, dataset: Path, metric: Metric) -> float:
     scores = np.genfromtxt(args["results_path"] / "docker-algorithm-scores.csv")
     scores = post_method(scores, args)
     labels = pd.read_csv(dataset).iloc[:, -1].values
@@ -21,7 +19,7 @@ def calculate_metric(post_method: PostMethod, args: Dict, dataset: Path, metric:
     return -result
 
 
-def func(algorithm: DockerAdapter, post_method: PostMethod, dataset: Path, param_names: List[str], metric: Metric, *params) -> float:
+def func(algorithm: DockerAdapter, post_method: 'PostMethod', dataset: Path, param_names: List[str], metric: Metric, *params) -> float:
     try:
         with TemporaryDirectory(dir="../") as tmpdirname:
             result_file = Path(tmpdirname)

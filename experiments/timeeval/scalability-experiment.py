@@ -41,7 +41,7 @@ def main():
     configurator = AlgorithmConfigurator(config_path="param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = dm.select()
+    datasets: List[Tuple[str, str]] = [d for d in dm.select() if d[1] == "ecg-10000-1"]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

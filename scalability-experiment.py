@@ -158,8 +158,8 @@ def main():
             "S2G++1p",
             params=FixedParameters({
                 "rate": 100,
-                "pattern-length": "heuristic:PeriodSizeHeuristic(factor=1.0, fb_value=50)",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
+                "pattern-length": "heuristic:PeriodSizeHeuristic(factor=2.0, fb_value=50)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 1
             })
@@ -168,8 +168,8 @@ def main():
             "S2G++20p",
             params=FixedParameters({
                 "rate": 100,
-                "pattern-length": "heuristic:PeriodSizeHeuristic(factor=1.0, fb_value=50)",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
+                "pattern-length": "heuristic:PeriodSizeHeuristic(factor=2.0, fb_value=50)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 20
             })

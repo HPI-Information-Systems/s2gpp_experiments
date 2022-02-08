@@ -31,7 +31,7 @@ _mstamp_parameters: Dict[str, Dict[str, Any]] = {
 
 def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
     return Algorithm(
-        name="Series2Graph++",
+        name="mSTAMP",
         main=DockerAdapter(
             image_name="mut:5000/akita/mstamp",
             skip_pull=skip_pull,

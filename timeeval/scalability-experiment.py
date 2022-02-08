@@ -19,8 +19,8 @@ from timeeval_experiments.algorithms import *
 
 
 # Setup logging
-from ..algorithms.mstamp import mstamp
-from ..algorithms.s2gpp import s2gpp_timeeval
+from experiments.algorithms.mstamp import mstamp
+from experiments.algorithms.s2gpp import s2gpp_timeeval
 
 logging.basicConfig(
     filename="timeeval.log",

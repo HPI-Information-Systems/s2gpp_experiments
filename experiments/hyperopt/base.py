@@ -6,14 +6,13 @@ from typing import List, Any, Optional, Union, Dict, DefaultDict
 from timeeval import Metric
 from timeeval.adapters import DockerAdapter
 
-from experiments.algorithms import Method, PostMethod, Heuristics
 from .utils import func
 import json
 
 
 class BaseHyperopt(abc.ABC):
-    def __init__(self, algorithms: List[Method], datasets: List[Path], n_calls: int = 10, verbose: bool = False, metric: Metric = Metric.ROC_AUC, results_path: Optional[Path] = None):
-        self.algorithms: List[Method] = algorithms
+    def __init__(self, algorithms: List['Method'], datasets: List[Path], n_calls: int = 10, verbose: bool = False, metric: Metric = Metric.ROC_AUC, results_path: Optional[Path] = None):
+        self.algorithms: List['Method'] = algorithms
         self.datasets: List[Path] = datasets
         self.n_calls = n_calls
         self.verbose = verbose
@@ -34,7 +33,7 @@ class BaseHyperopt(abc.ABC):
                 self.results[algorithm][dataset]["score"] = props["score"]
                 self.results[algorithm][dataset]["location"] = props["location"]
 
-    def _combination_not_yet_done(self, algorithm: Method, dataset: Path) -> bool:
+    def _combination_not_yet_done(self, algorithm: 'Method', dataset: Path) -> bool:
         algorithm_name = algorithm[0].image_name
         if algorithm_name in self.results:
             if str(dataset) in self.results[algorithm_name]:
@@ -47,7 +46,7 @@ class BaseHyperopt(abc.ABC):
             count += len(datasets)
         return count
 
-    def _call_heuristics(self, algorithm: DockerAdapter, post_method: PostMethod, dataset: Path, param_names: List[str], heuristics: Heuristics, *params) -> float:
+    def _call_heuristics(self, algorithm: DockerAdapter, post_method: 'PostMethod', dataset: Path, param_names: List[str], heuristics: 'Heuristics', *params) -> float:
         new_params = {
             name: p
             for name, p in zip(param_names, params)

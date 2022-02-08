@@ -146,6 +146,8 @@ MIN_ANOMALIES = 1
 
 
 def until_length_width(max_length: int, max_width: int, dataset: Tuple[str, str]) -> bool:
+    print(dataset[1])
+    print(dataset[1].split("-"))
     length, width = dataset[1].split("-")[1:]
     return int(length) <= max_length and int(width) <= max_width
 

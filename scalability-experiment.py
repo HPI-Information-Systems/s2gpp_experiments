@@ -145,12 +145,17 @@ MAX_CONTAMINATION = 0.1
 MIN_ANOMALIES = 1
 
 
+def until_length_width(max_length: int, max_width: int, dataset: Tuple[str, str]) -> bool:
+    length, width = dataset[1].split("-")[1:]
+    return int(length) <= max_length and int(width) <= max_width
+
+
 def main():
     dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
     configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = [d for d in dm.select() if "ecg-10000-1.unsupervised" == d[1]]
+    datasets: List[Tuple[str, str]] = [d for d in dm.select() if until_length_width(160000, 20, d)]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

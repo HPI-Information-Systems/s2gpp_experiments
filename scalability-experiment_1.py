@@ -169,6 +169,12 @@ def until_width(max_width: int, dataset: Tuple[str, str]) -> bool:
     return int(width) <= max_width
 
 
+def from_width(min_width: int, dataset: Tuple[str, str]) -> bool:
+    dataset_name = dataset[1].split(".")[0]
+    _length, width = dataset_name.split("-")[1:]
+    return int(width) >= min_width
+
+
 def main():
     dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
     configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")

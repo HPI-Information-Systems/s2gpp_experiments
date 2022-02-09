@@ -151,12 +151,30 @@ def until_length_width(max_length: int, max_width: int, dataset: Tuple[str, str]
     return int(length) <= max_length and int(width) <= max_width
 
 
+def from_length_width(min_length: int, min_width: int, dataset: Tuple[str, str]) -> bool:
+    dataset_name = dataset[1].split(".")[0]
+    length, width = dataset_name.split("-")[1:]
+    return int(length) >= min_length and int(width) >= min_width
+
+
+def from_length(min_length: int, dataset: Tuple[str, str]) -> bool:
+    dataset_name = dataset[1].split(".")[0]
+    length, _width = dataset_name.split("-")[1:]
+    return int(length) >= min_length
+
+
+def until_width(max_width: int, dataset: Tuple[str, str]) -> bool:
+    dataset_name = dataset[1].split(".")[0]
+    _length, width = dataset_name.split("-")[1:]
+    return int(width) <= max_width
+
+
 def main():
     dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
     configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = [d for d in dm.select() if until_length_width(160000, 20, d)]
+    datasets: List[Tuple[str, str]] = [d for d in dm.select() if from_length(320000, d) and until_width(1, d)]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [
@@ -185,10 +203,10 @@ def main():
                 "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
             })
         ),
-        dbstream(),
+        #dbstream(),
         kmeans(),
-        lstm_ad(),
-        normalizing_flows(),
+        #lstm_ad(),
+        #normalizing_flows(),
         torsk(),
     ]
     print(f"Selecting {len(algorithms)} algorithms")

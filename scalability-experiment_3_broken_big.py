@@ -186,7 +186,7 @@ def main():
     #configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = [d for d in dm.select() if from_length(320000, d) or from_width(50, d)]
+    datasets: List[Tuple[str, str]] = [d for d in dm.select() if from_length(320000, d)]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

@@ -157,10 +157,10 @@ def from_length_width(min_length: int, min_width: int, dataset: Tuple[str, str])
     return int(length) >= min_length and int(width) >= min_width
 
 
-def until_length(min_length: int, dataset: Tuple[str, str]) -> bool:
+def until_length(max_length: int, dataset: Tuple[str, str]) -> bool:
     dataset_name = dataset[1].split(".")[0]
     length, _width = dataset_name.split("-")[1:]
-    return int(length) >= min_length
+    return int(length) <= max_length
 
 
 def from_length(min_length: int, dataset: Tuple[str, str]) -> bool:
@@ -186,7 +186,7 @@ def main():
     #configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = [d for d in dm.select() if until_length(160000, d)]
+    datasets: List[Tuple[str, str]] = [d for d in dm.select() if until_length(80000, d)]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

@@ -46,8 +46,8 @@ class FromResults(BaseHyperopt):
         n_trans = re.findall(r"[#]Transitions\W[=]\W(\d+)", buf.getvalue())
 
         self.results[algorithm.image_name][str(dataset)]["transitions"] = n_trans
-        self.results[algorithm.image_name][str(dataset)]["location"] = [int(x) if type(x) == np.int64 else x for x in params]
+        self.results[algorithm.image_name][str(dataset)]["location"] = {n: int(x) if type(x) == np.int64 else x for n, x in zip(param_names, params)}
 
     def _add_error_entry(self, algorithm: 'Method', dataset: os.PathLike):
         self.results[algorithm[0].image_name][str(dataset)]["transitions"] = []
-        self.results[algorithm[0].image_name][str(dataset)]["location"] = []
+        self.results[algorithm[0].image_name][str(dataset)]["location"] = {}

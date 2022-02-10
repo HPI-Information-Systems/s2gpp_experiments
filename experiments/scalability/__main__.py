@@ -40,6 +40,26 @@ def main(args: argparse.Namespace):
         save_results(results, args.output_file)
 
 
+def sub(args: argparse.Namespace):
+    algorithms = define_algorithms(args.algorithms, args.dataset_dir)
+    datasets = define_datasets(args.datasets, args.dataset_dir)
+
+    results: Dict[str, Dict] = {}
+    exp_class = DistExperiment if args.distributed else NonDistExperiment
+
+    for algorithm in tqdm.tqdm(algorithms, desc="Algorithms", position=0):
+        exp = exp_class(algorithm, datasets, get_params(algorithm))
+        try:
+            exp.run()
+        except KeyboardInterrupt:
+            print("Interrupted! Saving already calculated results!")
+            results[algorithm[0].image_name] = exp.results
+            save_results(results, args.output_file)
+            break
+        results[algorithm[0].image_name] = exp.results
+        save_results(results, args.output_file)
+
+
 def define_args(parser: argparse.ArgumentParser):
     parser.add_argument("--algorithms", nargs="+", default=[], help="What algorithms to use (default: all)")
     parser.add_argument("--datasets", nargs="+", default=[], help="What datasets to use (default: all)")

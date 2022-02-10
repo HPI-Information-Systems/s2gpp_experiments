@@ -8,8 +8,7 @@ import time
 
 from ..algorithms import Method, PostMethod, Heuristics
 from .base import BaseHyperopt
-from .utils import func
-from ..utils import suppress_stdout_stderr
+from ..utils import suppress_stdout_stderr, func
 
 
 class WholeCollectionHyperopt(BaseHyperopt):
@@ -33,7 +32,7 @@ class WholeCollectionHyperopt(BaseHyperopt):
         result = gp_minimize(lambda p: self._call_heuristics(algorithm, post_method, param_names, heuristics, *p), params, n_calls=self.n_calls)
 
         self.results[algorithm.image_name]["whole-collection"]["score"] = -result["fun"]
-        self.results[algorithm.image_name]["whole-collection"]["location"] = [int(x) if type(x) == np.int64 else x for x in result["x"]]
+        self.results[algorithm.image_name]["whole-collection"]["location"] = {n: int(x) if type(x) == np.int64 else x for n, x in zip(param_names, result["x"])}
 
     def _call_heuristics(self, algorithm: DockerAdapter, post_method: PostMethod, param_names: List[str], heuristics: Heuristics, *params) -> float:
         results = []
@@ -54,4 +53,4 @@ class WholeCollectionHyperopt(BaseHyperopt):
 
     def _add_error_entry(self, algorithm: Method):
         self.results[algorithm[0].image_name]["whole-collection"]["score"] = None
-        self.results[algorithm[0].image_name]["whole-collection"]["location"] = []
+        self.results[algorithm[0].image_name]["whole-collection"]["location"] = {}

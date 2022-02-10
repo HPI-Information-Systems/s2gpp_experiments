@@ -1,0 +1,819 @@
+$schema: "generation-config-schema/guten-tag-generation-config.schema.yaml"
+
+templates:
+  - &base
+    length: 10000
+    semi-supervised: true
+    supervised: true
+
+  - &haystack-sine-20
+    <<: *base
+    base-oscillations:
+      - kind: sine
+        frequency: 4
+        variance: 0.05
+      - kind: sine
+        frequency: 2
+        variance: 0.05
+      - kind: sine
+        frequency: 1
+        variance: 0.05
+      - kind: sine
+        frequency: 0.5
+        variance: 0.05
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "*"
+            operand:
+              base: 2
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 2
+          operation:
+            kind: "*"
+            operand:
+              base: 3
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 3
+          operation:
+            kind: "*"
+            operand:
+              base: 4
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "+"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "+"
+            operand:
+              base: 2
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 2
+          operation:
+            kind: "+"
+            operand:
+              base: 3
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 3
+          operation:
+            kind: "+"
+            operand:
+              base: 4
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "-"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "-"
+            operand:
+              base: 2
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 2
+          operation:
+            kind: "-"
+            operand:
+              base: 3
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 3
+          operation:
+            kind: "-"
+            operand:
+              base: 4
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "+"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "+"
+            operand:
+              base: 2
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 2
+          operation:
+            kind: "+"
+            operand:
+              base: 3
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 3
+          operation:
+            kind: "+"
+            operand:
+              base: 4
+
+  - &haystack-sine-10
+    <<: *base
+    base-oscillations:
+      - kind: sine
+        frequency: 4
+        variance: 0.05
+      - kind: sine
+        frequency: 2
+        variance: 0.05
+      - kind: sine
+        frequency: 1
+        variance: 0.05
+      - kind: sine
+        frequency: 0.5
+        variance: 0.05
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "*"
+            operand:
+              base: 2
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 2
+          operation:
+            kind: "*"
+            operand:
+              base: 3
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 3
+          operation:
+            kind: "*"
+            operand:
+              base: 4
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "+"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "+"
+            operand:
+              base: 2
+
+  - &haystack-sine-8
+    <<: *base
+    base-oscillations:
+      - kind: sine
+        frequency: 4
+        variance: 0.05
+      - kind: sine
+        frequency: 2
+        variance: 0.05
+      - kind: sine
+        frequency: 1
+        variance: 0.05
+      - kind: sine
+        frequency: 0.5
+        variance: 0.05
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 1
+          operation:
+            kind: "*"
+            operand:
+              base: 2
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 2
+          operation:
+            kind: "*"
+            operand:
+              base: 3
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 3
+          operation:
+            kind: "*"
+            operand:
+              base: 4
+
+  - &haystack-sine-5
+    <<: *base
+    base-oscillations:
+      - kind: sine
+        frequency: 4
+        variance: 0.05
+      - kind: sine
+        frequency: 2
+        variance: 0.05
+      - kind: sine
+        frequency: 1
+        variance: 0.05
+      - kind: sine
+        frequency: 0.5
+        variance: 0.05
+      - kind: formula
+        variance: 0.05
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+
+  - &haystack-sine-4
+    <<: *base
+    base-oscillations:
+      - kind: sine
+        frequency: 4
+        variance: 0.05
+      - kind: sine
+        frequency: 2
+        variance: 0.05
+      - kind: sine
+        frequency: 1
+        variance: 0.05
+      - kind: sine
+        frequency: 0.5
+        variance: 0.05
+
+  - &haystack-sine-3
+    <<: *base
+    base-oscillations:
+      - kind: sine
+        frequency: 4
+        variance: 0.05
+      - kind: sine
+        frequency: 2
+        variance: 0.05
+      - kind: sine
+        frequency: 1
+        variance: 0.05
+
+  - &haystack-ecg-20
+    <<: *base
+    base-oscillations:
+      - kind: ecg
+        frequency: 8
+      - kind: ecg
+        frequency: 4
+      - kind: ecg
+        frequency: 2
+      - kind: ecg
+        frequency: 1
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "*"
+            operand:
+              base: 2
+      - kind: formula
+        formula:
+          base: 2
+          operation:
+            kind: "*"
+            operand:
+              base: 3
+      - kind: formula
+        formula:
+          base: 3
+          operation:
+            kind: "*"
+            operand:
+              base: 4
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "+"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "+"
+            operand:
+              base: 2
+      - kind: formula
+        formula:
+          base: 2
+          operation:
+            kind: "+"
+            operand:
+              base: 3
+      - kind: formula
+        formula:
+          base: 3
+          operation:
+            kind: "+"
+            operand:
+              base: 4
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "-"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "-"
+            operand:
+              base: 2
+      - kind: formula
+        formula:
+          base: 2
+          operation:
+            kind: "-"
+            operand:
+              base: 3
+      - kind: formula
+        formula:
+          base: 3
+          operation:
+            kind: "-"
+            operand:
+              base: 4
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "+"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "+"
+            operand:
+              base: 2
+      - kind: formula
+        formula:
+          base: 2
+          operation:
+            kind: "+"
+            operand:
+              base: 3
+      - kind: formula
+        formula:
+          base: 3
+          operation:
+            kind: "+"
+            operand:
+              base: 4
+
+  - &haystack-ecg-10
+    <<: *base
+    base-oscillations:
+      - kind: ecg
+        frequency: 8
+      - kind: ecg
+        frequency: 4
+      - kind: ecg
+        frequency: 2
+      - kind: ecg
+        frequency: 1
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "*"
+            operand:
+              base: 2
+      - kind: formula
+        formula:
+          base: 2
+          operation:
+            kind: "*"
+            operand:
+              base: 3
+      - kind: formula
+        formula:
+          base: 3
+          operation:
+            kind: "*"
+            operand:
+              base: 4
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "+"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "+"
+            operand:
+              base: 2
+
+  - &haystack-ecg-8
+    <<: *base
+    base-oscillations:
+      - kind: ecg
+        frequency: 8
+      - kind: ecg
+        frequency: 4
+      - kind: ecg
+        frequency: 2
+      - kind: ecg
+        frequency: 1
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+      - kind: formula
+        formula:
+          base: 1
+          operation:
+            kind: "*"
+            operand:
+              base: 2
+      - kind: formula
+        formula:
+          base: 2
+          operation:
+            kind: "*"
+            operand:
+              base: 3
+      - kind: formula
+        formula:
+          base: 3
+          operation:
+            kind: "*"
+            operand:
+              base: 4
+
+  - &haystack-ecg-5
+    <<: *base
+    base-oscillations:
+      - kind: ecg
+        frequency: 8
+      - kind: ecg
+        frequency: 4
+      - kind: ecg
+        frequency: 2
+      - kind: ecg
+        frequency: 1
+      - kind: formula
+        formula:
+          base: 0
+          operation:
+            kind: "*"
+            operand:
+              base: 1
+
+  - &haystack-ecg-4
+    <<: *base
+    base-oscillations:
+      - kind: ecg
+        frequency: 8
+      - kind: ecg
+        frequency: 4
+      - kind: ecg
+        frequency: 2
+      - kind: ecg
+        frequency: 1
+
+  - &haystack-ecg-3
+    <<: *base
+    base-oscillations:
+      - kind: ecg
+        frequency: 8
+      - kind: ecg
+        frequency: 4
+      - kind: ecg
+        frequency: 2
+
+
+timeseries:
+
+  - <<: *haystack-sine-20
+    name: haystack-sine-20-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-sine-20
+    name: haystack-sine-20-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-ecg-20
+    name: haystack-ecg-20-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-ecg-20
+    name: haystack-ecg-20-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-sine-10
+    name: haystack-sine-10-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-sine-10
+    name: haystack-sine-10-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-ecg-10
+    name: haystack-ecg-10-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-ecg-10
+    name: haystack-ecg-10-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-sine-8
+    name: haystack-sine-8-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-sine-8
+    name: haystack-sine-8-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-ecg-8
+    name: haystack-ecg-8-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-ecg-8
+    name: haystack-ecg-8-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-sine-5
+    name: haystack-sine-5-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-sine-5
+    name: haystack-sine-5-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-ecg-5
+    name: haystack-ecg-5-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-ecg-5
+    name: haystack-ecg-5-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-sine-4
+    name: haystack-sine-4-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-sine-4
+    name: haystack-sine-4-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-ecg-4
+    name: haystack-ecg-4-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-ecg-4
+    name: haystack-ecg-4-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-sine-3
+    name: haystack-sine-3-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-sine-3
+    name: haystack-sine-3-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0
+  - <<: *haystack-ecg-3
+    name: haystack-ecg-3-pattern
+    anomalies:
+      - position: beginning
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+            parameters:
+              sinusoid_k: 10.0
+  - <<: *haystack-ecg-3
+    name: haystack-ecg-3-platform
+    anomalies:
+      - position: end
+        length: 100
+        channel: 1
+        kinds:
+          - kind: platform
+            parameters:
+              value: 0.0

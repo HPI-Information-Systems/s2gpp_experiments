@@ -6,7 +6,7 @@ from typing import List, Any, Optional, Union, Dict, DefaultDict
 from timeeval import Metric
 from timeeval.adapters import DockerAdapter
 
-from .utils import func
+from ..utils import func
 import json
 
 
@@ -17,7 +17,7 @@ class BaseHyperopt(abc.ABC):
         self.n_calls = n_calls
         self.verbose = verbose
         self.metric = metric
-        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], List[Any]]]]] = defaultdict(lambda: defaultdict(dict))
+        self.results: DefaultDict[str, DefaultDict[str, Dict[str, Union[Optional[float], Dict, List]]]] = defaultdict(lambda: defaultdict(dict))
         if results_path is not None:
             self._load_finished_results(results_path)
 
@@ -54,7 +54,10 @@ class BaseHyperopt(abc.ABC):
         for name, p in zip(param_names, params):
             new_params[name] = heuristics.get(name, lambda p, a: a[name])(dataset, new_params)
 
-        return func(algorithm, post_method, dataset, param_names, self.metric, *[new_params[n] for n in param_names])
+        print(new_params)
+        s = func(algorithm, post_method, dataset, param_names, self.metric, *[new_params[n] for n in param_names])
+        print(s)
+        return s
 
     def save_to_file(self, path: Path):
         with path.open("w") as f:

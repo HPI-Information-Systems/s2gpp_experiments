@@ -35,8 +35,8 @@ class PerDatasetHyperopt(BaseHyperopt):
         result = gp_minimize(lambda p: self._call_heuristics(algorithm, post_method, dataset, param_names, heuristics, *p), params, n_calls=self.n_calls)
 
         self.results[algorithm.image_name][str(dataset)]["score"] = -result["fun"]
-        self.results[algorithm.image_name][str(dataset)]["location"] = [int(x) if type(x) == np.int64 else x for x in result["x"]]
+        self.results[algorithm.image_name][str(dataset)]["location"] = {n: int(x) if type(x) == np.int64 else x for n, x in zip(param_names, result["x"])}
 
     def _add_error_entry(self, algorithm: Method, dataset: os.PathLike):
         self.results[algorithm[0].image_name][str(dataset)]["score"] = None
-        self.results[algorithm[0].image_name][str(dataset)]["location"] = []
+        self.results[algorithm[0].image_name][str(dataset)]["location"] = {}

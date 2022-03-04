@@ -275,7 +275,6 @@ def main():
     limits = ResourceConstraints(
         tasks_per_host=1,
         task_memory_limit=20*GB,
-        train_fails_on_timeout=False,
         train_timeout=Duration("2 hours"),
         execute_timeout=Duration("2 hours"),
     )

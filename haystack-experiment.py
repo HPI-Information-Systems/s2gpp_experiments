@@ -50,7 +50,6 @@ def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Opt
         name="mSTAMP",
         main=DockerAdapter(
             image_name="mut:5000/akita/mstamp",
-            tag="799da4dc",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",

@@ -6,7 +6,7 @@ from ..algorithms import define_algorithms
 
 
 def main(args: argparse.Namespace):
-    algorithm = define_algorithms(["mut:5000/akita/s2gpp"], args.dataset.parent.parent)[0]
+    algorithm = define_algorithms(["sopedu:5000/akita/s2gpp"], args.dataset.parent.parent)[0]
     third_eye = ThirdEye(algorithm, args.dataset, args.output_dir, args.anomaly_length).open_lid()
     third_eye.run()
     print(f"Score {third_eye.score()}")

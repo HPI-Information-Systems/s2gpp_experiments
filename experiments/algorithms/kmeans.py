@@ -4,4 +4,4 @@ from .utils import get_docker_adapter
 
 
 def kmeans() -> DockerAdapter:
-    return get_docker_adapter("mut:5000/akita/kmeans")
+    return get_docker_adapter("sopedu:5000/akita/kmeans")

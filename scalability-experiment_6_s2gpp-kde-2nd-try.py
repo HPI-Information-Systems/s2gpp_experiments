@@ -126,7 +126,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
         name=name,
         main=DockerAdapter(
             image_name="sopedu:5000/akita/s2gpp",
-            tag="0.4.2",
+            tag="0.5.1",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",
@@ -187,8 +187,8 @@ def from_width(min_width: int, dataset: Tuple[str, str]) -> bool:
 
 
 def main():
-    dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/scalability", create_if_missing=False)
-    configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
+    dm = DatasetManager("/home/phillip.wenig/datasets/timeseries/scalability", create_if_missing=False)
+    configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/projects/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
     datasets: List[Tuple[str, str]] = [d for d in dm.select()]
@@ -253,7 +253,7 @@ def main():
 
     cluster_config = RemoteConfiguration(
         scheduler_host=HPI_CLUSTER.odin01,
-        worker_hosts=HPI_CLUSTER.nodes
+        worker_hosts=[f"odin{i:02d}" for i in range(1, 14)]
     )
     limits = ResourceConstraints(
         tasks_per_host=1,

@@ -75,6 +75,11 @@ def post_s2gpp(scores: np.ndarray, args: dict) -> np.ndarray:
     size = pattern_length + query_length
     return ReverseWindowing(window_size=size).fit_transform(scores)
 
+def fake_post_s2gpp(scores, args):
+    pattern_length = args.get("hyper_params", {}).get("pattern-length", 50)
+    query_length = args.get("hyper_params", {}).get("query-length", 75)
+
+    return np.random.rand(scores.shape[0] + pattern_length + query_length - 1)
 
 _s2gpp_parameters: Dict[str, Dict[str, Any]] = {
     "pattern-length": {
@@ -120,14 +125,14 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
     return Algorithm(
         name=name,
         main=DockerAdapter(
-            image_name="mut:5000/akita/s2gpp",
-            tag="0.4.1",
+            image_name="sopedu:5000/akita/s2gpp",
+            tag="0.4.2",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",
         ),
         preprocess=None,
-        postprocess=post_s2gpp,
+        postprocess=fake_post_s2gpp,
         param_schema=_s2gpp_parameters,
         param_config=params or ParameterConfig.defaults(),
         data_as_file=True,
@@ -186,7 +191,7 @@ def main():
     configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = [d for d in dm.select() if from_length(5120000, d)]
+    datasets: List[Tuple[str, str]] = [d for d in dm.select()]
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

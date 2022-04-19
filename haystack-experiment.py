@@ -120,7 +120,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
         name=name,
         main=DockerAdapter(
             image_name="sopedu:5000/akita/s2gpp",
-            tag="0.4.1",
+            tag="0.5.1",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",
@@ -269,7 +269,7 @@ def main():
 
     cluster_config = RemoteConfiguration(
         scheduler_host=HPI_CLUSTER.odin01,
-        worker_hosts=HPI_CLUSTER.nodes
+        worker_hosts=[f"odin{i:02d}" for i in range(1,15)]
     )
     limits = ResourceConstraints(
         tasks_per_host=1,

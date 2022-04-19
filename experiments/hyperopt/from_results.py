@@ -36,7 +36,7 @@ class FromResults(BaseHyperopt):
     def from_results(self, dataset: Path, method: 'Method'):
         algorithm, params, post_method, heuristics = method
         param_names, _ = zip(*params.items())
-        params = self.loaded_results["mut:5000/akita/s2gpp"][str(dataset)]["location"]
+        params = self.loaded_results["sopedu:5000/akita/s2gpp"][str(dataset)]["location"]
 
         buf = StringIO()
 

@@ -181,8 +181,8 @@ def from_width(min_width: int, dataset: Tuple[str, str]) -> bool:
 
 
 def main():
-    dm = DatasetManager("/home/phillip.wenig/Datasets/timeseries/haystack", create_if_missing=False)
-    configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/Projects/timeeval/timeeval/timeeval_experiments/param-config.json")
+    dm = DatasetManager("/home/phillip.wenig/datasets/timeseries/haystack", create_if_missing=False)
+    configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/projects/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
     datasets: List[Tuple[str, str]] = [d for d in dm.select()]

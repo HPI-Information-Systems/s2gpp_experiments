@@ -185,23 +185,45 @@ def main():
 
     algorithms = [
         s2gpp_timeeval(
-            "S2G++1p",
+            "S2G++1p-MeanShift",
             params=FixedParameters({
                 "rate": 100,
-                "pattern-length": 100,
+                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
                 "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 1
             })
         ),
         s2gpp_timeeval(
-            "S2G++20p",
+            "S2G++20p-MeanShift",
             params=FixedParameters({
                 "rate": 100,
-                "pattern-length": 100,
+                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
                 "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 20
+            })
+        ),
+        s2gpp_timeeval(
+            "S2G++1p-KDE",
+            params=FixedParameters({
+                "rate": 100,
+                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "threads": 1,
+                "clustering": "kde"
+            })
+        ),
+        s2gpp_timeeval(
+            "S2G++20p-KDE",
+            params=FixedParameters({
+                "rate": 100,
+                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "threads": 20,
+                "clustering": "kde"
             })
         ),
         mstamp(

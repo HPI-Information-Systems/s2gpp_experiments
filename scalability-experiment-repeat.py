@@ -28,6 +28,10 @@ def post_mstamp(scores: np.ndarray, args: dict) -> np.ndarray:
     window_size = args.get("hyper_params", {}).get("anomaly_window_size", 50)
     return ReverseWindowing(window_size=window_size).fit_transform(scores)
 
+def fake_post_mstamp(scores: np.ndarray, args: dict) -> np.ndarray:
+    window_size = args.get("hyper_params", {}).get("anomaly_window_size", 50)
+    return np.random.rand(scores.shape[0] + window_size - 1)
+
 
 _mstamp_parameters: Dict[str, Dict[str, Any]] = {
     "anomaly_window_size": {
@@ -56,7 +60,7 @@ def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Opt
             group_privileges="akita",
         ),
         preprocess=None,
-        postprocess=post_mstamp,
+        postprocess=fake_post_mstamp,
         param_schema=_mstamp_parameters,
         param_config=params or ParameterConfig.defaults(),
         data_as_file=True,
@@ -75,6 +79,11 @@ def post_s2gpp(scores: np.ndarray, args: dict) -> np.ndarray:
     size = pattern_length + query_length
     return ReverseWindowing(window_size=size).fit_transform(scores)
 
+def fake_post_s2gpp(scores, args):
+    pattern_length = args.get("hyper_params", {}).get("pattern-length", 50)
+    query_length = args.get("hyper_params", {}).get("query-length", 75)
+
+    return np.random.rand(scores.shape[0] + pattern_length + query_length - 1)
 
 _s2gpp_parameters: Dict[str, Dict[str, Any]] = {
     "pattern-length": {
@@ -121,7 +130,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
             group_privileges="akita",
         ),
         preprocess=None,
-        postprocess=post_s2gpp,
+        postprocess=fake_post_s2gpp,
         param_schema=_s2gpp_parameters,
         param_config=params or ParameterConfig.defaults(),
         data_as_file=True,
@@ -231,11 +240,23 @@ def main():
                 "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
             })
         ),
-        dbstream(),
-        kmeans(),
-        lstm_ad(),
-        normalizing_flows(),
-        torsk(),
+        dbstream(
+            params=FixedParameters({
+                "window_size": 100
+            })
+        ),
+        #kmeans(),
+        lstm_ad(
+            params=FixedParameters({
+                "epochs": 1
+            })
+        ),
+        normalizing_flows(
+            params=FixedParameters({
+                "epochs": 1
+            })
+        ),
+        #torsk(),
     ]
     print(f"Selecting {len(algorithms)} algorithms")
 

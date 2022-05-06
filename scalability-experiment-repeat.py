@@ -261,7 +261,7 @@ def main():
     print(f"Selecting {len(algorithms)} algorithms")
 
     print("Configuring algorithms...")
-    configurator.configure(algorithms[5:], perform_search=False)
+    #configurator.configure(algorithms[5:], perform_search=False)
 
     print("\nDatasets:")
     print("=====================================================================================")

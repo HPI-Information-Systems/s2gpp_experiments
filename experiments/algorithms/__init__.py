@@ -19,12 +19,12 @@ def define_algorithms(filters: List[str], dataset_dir: Path) -> List[Method]:
     s2gpp_params = get_hyperopt_params()
     algorithms = [
         (s2gpp(), {
-            "pattern-length": [1.0],
+            "pattern-length": (20, 300),
             "latent": [0.25],
             "query-length": [s2gpp_params[2]],
             "rate": [s2gpp_params[3]]
         }, post_s2gpp, {
-            "pattern-length": DatasetAttrHeuristic(dataset_dir, attr="max_anomaly_length", param="pattern-length", dtype=int),
+            #"pattern-length": DatasetAttrHeuristic(dataset_dir, attr="max_anomaly_length", param="pattern-length", dtype=int),
             "latent": SiblingHeuristic(dataset_dir, sibling="pattern-length", param="latent", dtype=int),
             "query-length": SiblingHeuristic(dataset_dir, sibling="pattern-length", param="query-length", dtype=int)
         }),

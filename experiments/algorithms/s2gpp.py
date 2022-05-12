@@ -20,8 +20,8 @@ def post_s2gpp(scores: np.ndarray, args: dict) -> np.ndarray:
     return ReverseWindowing(window_size=size).fit_transform(scores)
 
 
-def s2gpp() -> DockerAdapter:
-    return get_docker_adapter("mut:5000/akita/s2gpp", "0.3.2")
+def s2gpp(tag: str = "latest") -> DockerAdapter:
+    return get_docker_adapter("sopedu:5000/akita/s2gpp", tag)
 
 
 _s2gpp_parameters: Dict[str, Dict[str, Any]] = {
@@ -58,12 +58,12 @@ _s2gpp_parameters: Dict[str, Dict[str, Any]] = {
 }
 
 
-def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
+def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None, tag: str = "latest") -> Algorithm:
     return Algorithm(
         name=name,
         main=DockerAdapter(
             image_name="sopedu:5000/akita/s2gpp",
-            tag="0.3.2",
+            tag=tag,
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",

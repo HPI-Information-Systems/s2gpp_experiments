@@ -231,7 +231,8 @@ def main():
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 20,
                 "clustering": "kde"
-            })
+            }),
+            skip_pull=True
         ),
         #mstamp(
         #    params=FixedParameters({

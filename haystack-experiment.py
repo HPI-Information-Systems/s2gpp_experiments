@@ -189,39 +189,39 @@ def main():
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [
-        s2gpp_timeeval(
-            "S2G++1p-MeanShift",
-            params=FixedParameters({
-                "rate": 100,
-                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-                "threads": 1,
-                "clustering": "meanshift"
-            })
-        ),
-        s2gpp_timeeval(
-            "S2G++20p-MeanShift",
-            params=FixedParameters({
-                "rate": 100,
-                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-                "threads": 20,
-                "clustering": "meanshift"
-            })
-        ),
-        s2gpp_timeeval(
-            "S2G++1p-KDE",
-            params=FixedParameters({
-                "rate": 100,
-                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-                "threads": 1,
-                "clustering": "kde"
-            })
-        ),
+        #s2gpp_timeeval(
+        #    "S2G++1p-MeanShift",
+        #    params=FixedParameters({
+        #        "rate": 100,
+        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+        #        "threads": 1,
+        #        "clustering": "meanshift"
+        #    })
+        #),
+        #s2gpp_timeeval(
+        #    "S2G++20p-MeanShift",
+        #    params=FixedParameters({
+        #        "rate": 100,
+        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+        #        "threads": 20,
+        #        "clustering": "meanshift"
+        #    })
+        #),
+        #s2gpp_timeeval(
+        #    "S2G++1p-KDE",
+        #    params=FixedParameters({
+        #        "rate": 100,
+        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+        #        "threads": 1,
+        #        "clustering": "kde"
+        #    })
+        #),
         s2gpp_timeeval(
             "S2G++20p-KDE",
             params=FixedParameters({
@@ -233,16 +233,16 @@ def main():
                 "clustering": "kde"
             })
         ),
-        mstamp(
-            params=FixedParameters({
-                "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
-            })
-        ),
-        dbstream(),
-        kmeans(),
-        lstm_ad(),
-        normalizing_flows(),
-        torsk(),
+        #mstamp(
+        #    params=FixedParameters({
+        #        "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
+        #    })
+        #),
+        #dbstream(),
+        #kmeans(),
+        #lstm_ad(),
+        #normalizing_flows(),
+        #torsk(),
     ]
     print(f"Selecting {len(algorithms)} algorithms")
 

@@ -200,17 +200,17 @@ def main():
         #        "clustering": "meanshift"
         #    })
         #),
-        s2gpp_timeeval(
-            "S2G++20p-MeanShift",
-            params=FixedParameters({
-                "rate": 100,
-                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-                "threads": 20,
-                "clustering": "meanshift"
-            })
-        ),
+        #s2gpp_timeeval(
+        #    "S2G++20p-MeanShift",
+        #    params=FixedParameters({
+        #        "rate": 100,
+        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+        #        "threads": 20,
+        #        "clustering": "meanshift"
+        #    })
+        #),
         #s2gpp_timeeval(
         #    "S2G++1p-KDE",
         #    params=FixedParameters({
@@ -233,16 +233,16 @@ def main():
                 "clustering": "kde"
             })
         ),
-        mstamp(
-            params=FixedParameters({
-                "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
-            })
-        ),
-        dbstream(),
-        kmeans(),
-        lstm_ad(),
-        normalizing_flows(),
-        torsk(),
+        #mstamp(
+        #    params=FixedParameters({
+        #        "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
+        #    })
+        #),
+        #dbstream(),
+        #kmeans(),
+        #lstm_ad(),
+        #normalizing_flows(),
+        #torsk(),
     ]
     print(f"Selecting {len(algorithms)} algorithms")
 
@@ -269,7 +269,7 @@ def main():
 
     cluster_config = RemoteConfiguration(
         scheduler_host=HPI_CLUSTER.odin01,
-        worker_hosts=[f"odin{i:02d}" for i in range(1,15)]
+        worker_hosts=[f"odin{i:02d}" for i in range(3,15)]
     )
     limits = ResourceConstraints(
         tasks_per_host=1,

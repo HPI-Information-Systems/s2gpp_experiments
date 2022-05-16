@@ -124,7 +124,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
         name=name,
         main=DockerAdapter(
             image_name="sopedu:5000/akita/s2gpp",
-            tag="0.7.0",
+            tag="0.8.0",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",

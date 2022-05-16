@@ -124,7 +124,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
         name=name,
         main=DockerAdapter(
             image_name="sopedu:5000/akita/s2gpp",
-            tag="0.7.0",
+            tag="0.8.0",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",
@@ -215,23 +215,23 @@ def main():
                 "clustering": "kde"
             })
         ),
-        mstamp(
-            params=FixedParameters({
-                "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
-            })
-        ),
-        dbstream(
-            params=FixedParameters({
-                "window_size": 100
-            })
-        ),
-        kmeans(),
-        torsk(),
-        lstm_ad(
-            params=FixedParameters({
-                "epochs": 1
-            })
-        )
+        #mstamp(
+        #    params=FixedParameters({
+        #        "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
+        #    })
+        #),
+        #dbstream(
+        #    params=FixedParameters({
+        #        "window_size": 100
+        #    })
+        #),
+        #kmeans(),
+        #torsk(),
+        #lstm_ad(
+        #    params=FixedParameters({
+        #        "epochs": 1
+        #    })
+        #)
     ]
     print(f"Selecting {len(algorithms)} algorithms")
 

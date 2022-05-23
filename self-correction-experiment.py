@@ -227,7 +227,7 @@ def main():
             params=FixedParameters({
                 "rate": 100,
                 "pattern-length": 57,
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 20,
                 "clustering": "kde"
@@ -239,7 +239,7 @@ def main():
             params=FixedParameters({
                 "rate": 100,
                 "pattern-length": 57,
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 20,
                 "clustering": "kde",

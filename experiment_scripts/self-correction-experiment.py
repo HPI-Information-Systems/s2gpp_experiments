@@ -120,7 +120,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
         name=name,
         main=DockerAdapter(
             image_name="sopedu:5000/akita/s2gpp",
-            tag="0.8.0",
+            tag="0.8.1",
             skip_pull=skip_pull,
             timeout=timeout,
             group_privileges="akita",
@@ -189,66 +189,36 @@ def main():
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [
-        #s2gpp_timeeval(
-        #    "S2G++1p-MeanShift",
-        #    params=FixedParameters({
-        #        "rate": 100,
-        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-        #        "threads": 1,
-        #        "clustering": "meanshift"
-        #    })
-        #),
-        #s2gpp_timeeval(
-        #    "S2G++20p-MeanShift",
-        #    params=FixedParameters({
-        #        "rate": 100,
-        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-        #        "threads": 20,
-        #        "clustering": "meanshift"
-        #    })
-        #),
-        #s2gpp_timeeval(
-        #    "S2G++1p-KDE",
-        #    params=FixedParameters({
-        #        "rate": 100,
-        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-        #        "threads": 1,
-        #        "clustering": "kde"
-        #    })
-        #),
         s2gpp_timeeval(
-            "S2G++20p-KDE",
+            "S2G++20p-KDE (no self-correction)",
             params=FixedParameters({
                 "rate": 100,
-                "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
+                "pattern-length": 57,
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
                 "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
                 "threads": 20,
                 "clustering": "kde"
             }),
             skip_pull=True
         ),
-        #mstamp(
-        #    params=FixedParameters({
-        #        "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
-        #    })
-        #),
-        #dbstream(),
-        #kmeans(),
-        #lstm_ad(),
-        #normalizing_flows(),
-        #torsk(),
+        s2gpp_timeeval(
+            "S2G++20p-KDE (self-correction)",
+            params=FixedParameters({
+                "rate": 100,
+                "pattern-length": 57,
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "threads": 20,
+                "clustering": "kde",
+                "self-correction": ""
+            }),
+            skip_pull=True
+        )
     ]
     print(f"Selecting {len(algorithms)} algorithms")
 
     print("Configuring algorithms...")
-    configurator.configure(algorithms[5:], perform_search=False)
+    configurator.configure(algorithms[2:], perform_search=False)
 
     print("\nDatasets:")
     print("=====================================================================================")

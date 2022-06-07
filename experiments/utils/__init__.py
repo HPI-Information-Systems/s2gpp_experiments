@@ -45,16 +45,17 @@ def run_docker_algorithm(algorithm: DockerAdapter, dataset: Path, result_file: P
         "results_path": result_file,
         "hyper_params": params
     }
+    print(args, dataset)
     algorithm(dataset, args)
     return args
 
 
 def func(algorithm: DockerAdapter, post_method: 'PostMethod', dataset: Path, param_names: List[str], metric: Metric, *params) -> float:
     try:
-        with TemporaryDirectory(dir="../") as tmpdirname:
-            result_file = Path(tmpdirname)
+        with TemporaryDirectory(dir=".") as tmpdirname:
+            result_file = Path(".") 
             params = dict(zip(param_names, params))
             args = run_docker_algorithm(algorithm, dataset, result_file, params)
-            return -calculate_metric(post_method, args, dataset, metric)
+        return -calculate_metric(post_method, args, dataset, metric)
     except:
         return 0.0

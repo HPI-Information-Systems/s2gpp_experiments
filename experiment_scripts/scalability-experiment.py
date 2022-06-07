@@ -189,37 +189,17 @@ def main():
     configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/projects/timeeval/timeeval_experiments/param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = dm.select()  # [d for d in dm.select() if until_length_width(160000, 20, d)]
+    datasets: List[Tuple[str, str]] = dm.select()
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [
-        #s2gpp_timeeval(
-        #    "S2G++1p-MeanShift",
-        #    params=FixedParameters({
-        #        "rate": 100,
-        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-        #        "threads": 1
-        #    })
-        #),
-        #s2gpp_timeeval(
-        #    "S2G++20p-MeanShift",
-        #    params=FixedParameters({
-        #        "rate": 100,
-        #        "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-        #        "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-        #        "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
-        #        "threads": 20
-        #    })
-        #),
         s2gpp_timeeval(
             "S2G++1p-KDE",
             params=FixedParameters({
                 "rate": 100,
                 "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.0)",
                 "threads": 1,
                 "clustering": "kde"
             })
@@ -229,38 +209,38 @@ def main():
             params=FixedParameters({
                 "rate": 100,
                 "pattern-length": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
-                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./4.)",
-                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.5)",
+                "latent": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1./3.)",
+                "query-length": "heuristic:ParameterDependenceHeuristic(source_parameter='pattern-length', factor=1.0)",
                 "threads": 20,
                 "clustering": "kde"
             })
         ),
-        #mstamp(
-        #    params=FixedParameters({
-        #        "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
-        #    })
-        #),
-        #dbstream(
-        #    params=FixedParameters({
-        #        "window_size": 100
-        #    })
-        #),
-        #kmeans(),
-        #lstm_ad(
-        #    params=FixedParameters({
-        #        "epochs": 1
-        #    })
-        #),
-        #normalizing_flows(
-        #    params=FixedParameters({
-        #        "epochs": 1
-        #    })
-        #),
-        #torsk(),
+        mstamp(
+            params=FixedParameters({
+                "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
+            })
+        ),
+        dbstream(
+            params=FixedParameters({
+                "window_size": 100
+            })
+        ),
+        kmeans(),
+        lstm_ad(
+            params=FixedParameters({
+                "epochs": 1
+            })
+        ),
+        normalizing_flows(
+            params=FixedParameters({
+                "epochs": 1
+            })
+        ),
+        torsk(),
     ]
     print(f"Selecting {len(algorithms)} algorithms")
 
-    print("Configuring algorithms...")
+    #print("Configuring algorithms...")
     #configurator.configure(algorithms[5:], perform_search=False)
 
     print("\nDatasets:")

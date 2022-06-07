@@ -120,7 +120,7 @@ def get_contribution_score(args: argparse.Namespace, dataset: pd.Series) -> np.n
     hyper_params = {
         "pattern-length": int(dataset.max_anomaly_length),
         "latent": int(dataset.max_anomaly_length / 3),
-        "query-length": int(dataset.max_anomaly_length * 1.5),
+        "query-length": int(dataset.max_anomaly_length * 1.0),
         "rate": 100,
         "clustering": "kde",
         "explainability": "",

@@ -53,7 +53,7 @@ def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Opt
     return Algorithm(
         name="mSTAMP",
         main=DockerAdapter(
-            image_name="sopedu:5000/akita/mstamp",
+            image_name="registry.gitlab.hpi.de/akita/i/mstamp",
             tag="latest",
             skip_pull=skip_pull,
             timeout=timeout,
@@ -123,7 +123,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
     return Algorithm(
         name=name,
         main=DockerAdapter(
-            image_name="sopedu:5000/akita/s2gpp",
+            image_name="registry.gitlab.hpi.de/akita/i/s2gpp",
             tag="0.8.0",
             skip_pull=skip_pull,
             timeout=timeout,

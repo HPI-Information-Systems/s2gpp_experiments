@@ -33,7 +33,7 @@ def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Opt
     return Algorithm(
         name="mSTAMP",
         main=DockerAdapter(
-            image_name="sopedu:5000/akita/mstamp",
+            image_name="registry.gitlab.hpi.de/akita/i/mstamp",
             tag="799da4dc",
             skip_pull=skip_pull,
             timeout=timeout,

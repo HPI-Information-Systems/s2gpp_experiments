@@ -8,4 +8,4 @@ def post_dbstream(scores: np.ndarray, _args: dict) -> np.ndarray:
 
 
 def dbstream() -> DockerAdapter:
-    return get_docker_adapter("sopedu:5000/akita/dbstream")
+    return get_docker_adapter("registry.gitlab.hpi.de/akita/i/dbstream")

@@ -62,7 +62,7 @@ def s2gpp_timeeval(name: str, params: ParameterConfig = None, skip_pull: bool = 
     return Algorithm(
         name=name,
         main=DockerAdapter(
-            image_name="sopedu:5000/akita/s2gpp",
+            image_name="registry.gitlab.hpi.de/akita/i/s2gpp",
             tag=tag,
             skip_pull=skip_pull,
             timeout=timeout,

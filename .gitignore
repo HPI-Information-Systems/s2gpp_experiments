@@ -4,3 +4,5 @@ data/
 results
 **/*.tar.gz
 anomaly_scores.ts
+TimeEval-algorithms/
+S2Gpp/

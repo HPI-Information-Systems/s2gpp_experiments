@@ -22,7 +22,7 @@ class S2GPPExplainability(DockerAdapter):
     MODEL_FILE_NAME = Path("model.pkl")
 
     def __init__(self, tag: str = "latest", group_privileges="akita", *args, **kwargs):
-        super().__init__("sopedu:5000/akita/s2gpp", tag, group_privileges, *args, **kwargs)
+        super().__init__("registry.gitlab.hpi.de/akita/i/s2gpp", tag, group_privileges, *args, **kwargs)
 
     def explain(self, dataset_path: Path, **hyper_params) -> np.ndarray:
         container = self._run_explainability(dataset_path, **hyper_params)

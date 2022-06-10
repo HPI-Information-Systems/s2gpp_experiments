@@ -1,6 +1,6 @@
 .idea
 .ipynb_checkpoints
-data/GutenTAG
+data/
 results
 **/*.tar.gz
 anomaly_scores.ts

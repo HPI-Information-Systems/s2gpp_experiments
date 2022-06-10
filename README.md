@@ -5,12 +5,16 @@ The code for the algorithm can be found [here](https://github.com/HPI-Informatio
 
 The following experiments can be reproduced:
 
-- [Quality](#Quality Experiment)
-- Correlation Anomaly Detection
-- Self-Correction
-- Scalability
-- Explainability
-- Hyper-Parameter Optimization
+- [Quality](#quality-experiment)
+- [Correlation Anomaly Detection](#correlation-anomaly-detection-experiment)
+- [Self-Correction](#self-correction-experiment)
+- [Scalability](#scalability-experiment)
+- [Explainability](#explainability-experiment)
+- [Hyper-Parameter Optimization](#hyper-parameter-optimization)
+
+The results with the distributed version of S2G++ cannot be reproduced with this repository alone. 
+Therefore, please [generate](#generate-datasets) the _scalability_ datasets and start S2G++ from multiple machines 
+as described in [its repository](https://github.com/HPI-Information-Systems/S2Gpp).
 
 ## Requirements
 
@@ -39,11 +43,11 @@ Uses images from [TimeEval-Algorithms repository](https://github.com/HPI-Informa
 
 This repository contains the configurations for generating the following datasets:
 
-- [haystack](dataset_configs/haystack.yaml) for Quality Experiment and Self-Correction Experiment
-- [comut](dataset_configs/comut.yaml) (seed: 42) for Correlation Anomaly Detection Experiment
-- [scalability](dataset_configs/scalability.yaml) (seed: 42) for Scalability Experiment
-- [scalability_xl](dataset_configs/scalability_xl.yaml) (seed: 42) for Scalability Experiment
-- [haystack-explain](dataset_configs/haystack-explain.yaml) (seed: 421) for Explainability Experiment
+- [haystack](dataset_configs/haystack.yaml) for [Quality Experiment](#quality-experiment) and [Self-Correction Experiment](#self-correction-experiment)
+- [comut](dataset_configs/comut.yaml) (seed: 42) for [Correlation Anomaly Detection Experiment](#correlation-anomaly-detection-experiment)
+- [scalability](dataset_configs/scalability.yaml) (seed: 42) for [Scalability Experiment](#scalability-experiment)
+- [scalability_xl](dataset_configs/scalability_xl.yaml) (seed: 42) for [Scalability Experiment](#scalability-experiment)
+- [haystack-explain](dataset_configs/haystack-explain.yaml) (seed: 421) for [Explainability Experiment](#explainability-experiment)
 
 To generate the listed datasets, execute the command below with the corresponding variable values.
 

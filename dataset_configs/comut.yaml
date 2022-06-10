@@ -1,0 +1,236 @@
+timeseries:
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 2
+  generation-id: 0
+  length: 10000
+  name: rmj-short-mode-correlation-on-2
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 3
+  generation-id: 1
+  length: 10000
+  name: rmj-short-mode-correlation-on-3
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 4
+  generation-id: 2
+  length: 10000
+  name: rmj-short-mode-correlation-on-4
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 80
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 2
+  generation-id: 3
+  length: 10000
+  name: rmj-medium-mode-correlation-on-2
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 80
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 3
+  generation-id: 4
+  length: 10000
+  name: rmj-medium-mode-correlation-on-3
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 80
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 4
+  generation-id: 5
+  length: 10000
+  name: rmj-medium-mode-correlation-on-4
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 160
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 2
+  generation-id: 6
+  length: 10000
+  name: rmj-large-mode-correlation-on-2
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 160
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 3
+  generation-id: 7
+  length: 10000
+  name: rmj-large-mode-correlation-on-3
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds:
+    - kind: mode-correlation
+    length: 160
+    position: beginning
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 4
+  generation-id: 8
+  length: 10000
+  name: rmj-large-mode-correlation-on-4
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds: &id001
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  - kinds: *id001
+    length: 40
+    position: end
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 2
+  generation-id: 9
+  length: 10000
+  name: rmj-2-short-anomalies-on-2-same-channel
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - channel: 0
+    kinds: &id002
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  - channel: 1
+    kinds: *id002
+    length: 40
+    position: end
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 2
+  generation-id: 10
+  length: 10000
+  name: rmj-2-short-anomalies-on-2-different-channel
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - kinds: &id003
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  - kinds: *id003
+    length: 40
+    position: middle
+  - kinds: *id003
+    length: 40
+    position: end
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 3
+  generation-id: 11
+  length: 10000
+  name: rmj-3-short-anomalies-on-3-same-channel
+  semi-supervised: true
+  supervised: true
+- anomalies:
+  - channel: 0
+    kinds: &id004
+    - kind: mode-correlation
+    length: 40
+    position: beginning
+  - channel: 1
+    kinds: *id004
+    length: 40
+    position: middle
+  - channel: 2
+    kinds: *id004
+    length: 40
+    position: end
+  base-oscillation:
+    amplitude: 1.0
+    frequency: 250.0
+    kind: random-mode-jump
+    variance: 0.05
+  channels: 3
+  generation-id: 12
+  length: 10000
+  name: rmj-3-short-anomalies-on-3-different-channel
+  semi-supervised: true
+  supervised: true
+meta:
+  download_link: https://gitlab.hpi.de/akita/guten-tag
+  git_commit_sha: 68efbdd5c3d588f91fe6c122949d99553ab3339d
+  seed: null

@@ -1,0 +1,389 @@
+$schema: "generation-config-schema/guten-tag-generation-config.schema.yaml"
+
+templates:
+  - &base-oscillation
+    kind: ecg
+    frequency: 1
+
+  - &base
+    length: 10000
+    semi-supervised: true
+    supervised: true
+    anomalies:
+      - position: end
+        length: 100
+        channel: 0
+        kinds:
+          - kind: pattern
+
+timeseries:
+# length
+  - <<: *base
+    name: ecg-10000-1
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-20000-1
+    length: 20000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-40000-1
+    length: 40000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-80000-1
+    length: 80000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-160000-1
+    length: 160000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-320000-1
+    length: 320000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-640000-1
+    length: 640000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-1280000-1
+    length: 1280000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-2560000-1
+    length: 2560000
+    base-oscillations:
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-5120000-1
+    length: 5120000
+    base-oscillations:
+      - *base-oscillation
+
+# width
+
+  - <<: *base
+    name: ecg-10000-2
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-4
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-6
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-8
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-10
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-12
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-14
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-16
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-18
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-20
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-50
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+
+  - <<: *base
+    name: ecg-10000-100
+    base-oscillations:
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+      - *base-oscillation
+

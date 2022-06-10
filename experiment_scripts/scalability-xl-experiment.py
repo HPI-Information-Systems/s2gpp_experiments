@@ -185,8 +185,8 @@ def from_width(min_width: int, dataset: Tuple[str, str]) -> bool:
 
 
 def main():
-    dm = DatasetManager("/home/phillip.wenig/datasets/timeseries/scalability_xl", create_if_missing=False)
-    configurator = AlgorithmConfigurator(config_path="/home/phillip.wenig/projects/timeeval/timeeval_experiments/param-config.json")
+    dm = DatasetManager("data/scalability_xl", create_if_missing=False)
+    configurator = AlgorithmConfigurator(config_path="param-config.json")
 
     # Select datasets and algorithms
     datasets: List[Tuple[str, str]] = dm.select()

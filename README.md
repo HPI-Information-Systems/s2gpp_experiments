@@ -37,8 +37,18 @@ Uses images from [TimeEval-Algorithms repository](https://github.com/HPI-Informa
 
 ## Generate Datasets
 
+This repository contains the configurations for generating the following datasets:
+
+- [haystack](dataset_configs/haystack.yaml) for Quality Experiment and Self-Correction Experiment
+- [comut](dataset_configs/comut.yaml) (seed: 42) for Correlation Anomaly Detection Experiment
+- [scalability](dataset_configs/scalability.yaml) (seed: 42) for Scalability Experiment
+- [scalability_xl](dataset_configs/scalability_xl.yaml) (seed: 42) for Scalability Experiment
+- [haystack-explain](dataset_configs/haystack-explain.yaml) (seed: 421) for Explainability Experiment
+
+To generate the listed datasets, execute the command below with the corresponding variable values.
+
 ```shell
-python -m gutentag ...
+python -m gutenTAG --config-yaml <dataset-name>.yaml [--seed <dataset-seed>] --output-dir data/<dataset-name> --addons gutenTAG.addons.timeeval.TimeEvalAddOn
 ```
 
 # Quality Experiment
@@ -88,7 +98,7 @@ For this experiment, we do not use TimeEval. The script in [explainability-exper
 If you want to repeat this experiment on your machines, be aware to adapt the local docker image name [here](experiment_scripts/explainability-experiment.py#L25) and group [here](experiment_scripts/explainability-experiment.py#L119) that you have built before.
 
 ```shell
-python experiment_scripts/explainability-experiment.py
+python experiment_scripts/explainability-experiment.py --datasets data/haystack-explain
 ```
 
 # Hyper-Parameter Optimization
@@ -99,7 +109,3 @@ If you want to repeat this experiment on your machines, be aware to adapt the lo
 ```shell
 python -m hyperopt --algorithms <image-name> --hyperopt-calls 30 --training-type unsupervised --output-file results.json --dataset-dir data/hyperopt --mode whole_collection
 ```
-
-# TODO
-
-- [ ] update param-config paths

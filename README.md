@@ -55,6 +55,10 @@ To generate the listed datasets, execute the command below with the correspondin
 python -m gutenTAG --config-yaml <dataset-name>.yaml [--seed <dataset-seed>] --output-dir data/<dataset-name> --addons gutenTAG.addons.timeeval.TimeEvalAddOn
 ```
 
+## Download Exathlon Dataset
+
+The integrated [Exathlon](https://github.com/exathlonbenchmark/exathlon) [1] datasets can be downloaded [⬇ here](https://owncloud.hpi.de/s/o3U8VrNmC5EV2Sp/download).
+
 # Quality Experiment
 
 For this experiment, we use the [TimeEval](https://github.com/HPI-Information-Systems/TimeEval) evaluation 
@@ -63,6 +67,7 @@ If you want to repeat this experiment on your machines, be aware to change the r
 
 ```shell
 python experiment_scripts/haystack-experiment.py
+python experiment_scripts/exathlon-experiment.py
 ```
 
 # Correlation Anomaly Detection Experiment
@@ -113,3 +118,8 @@ If you want to repeat this experiment on your machines, be aware to adapt the lo
 ```shell
 python -m hyperopt --algorithms <image-name> --hyperopt-calls 30 --training-type unsupervised --output-file results.json --dataset-dir data/hyperopt --mode whole_collection
 ```
+
+
+# References
+
+[1] _Exathlon: A Benchmark for Explainable Anomaly Detection over Time Series._ Vincent Jacob, Fei Song, Arnaud Stiegler, Bijan Rad, Yanlei Diao, and Nesime Tatbul. Proceedings of the VLDB Endowment (PVLDB), 14(11): 2613 - 2626, 2021.

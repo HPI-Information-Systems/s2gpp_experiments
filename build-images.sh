@@ -10,6 +10,7 @@ algorithms=(
     lstm_ad
     normalizing_flows
     torsk
+    damp
 )
 
 for algorithm in "${algorithms[@]}"; do

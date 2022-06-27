@@ -65,6 +65,62 @@ def mstamp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Opt
 
 
 """
+############## DAMP
+"""
+
+def post_DAMP(scores: np.ndarray, args: dict) -> np.ndarray:
+    window_size = args.get("hyper_params", {}).get("anomaly_window_size", 50)
+    return ReverseWindowing(window_size=window_size).fit_transform(scores)
+
+
+_damp_parameters: Dict[str, Dict[str, Any]] = {
+    "anomaly_window_size": {
+        "defaultValue": 30,
+        "description": "Size of the sliding window.",
+        "name": "anomaly_window_size",
+        "type": "Int"
+    },
+    "n_init_train": {
+        "defaultValue": 100,
+        "description": "Fraction of data used to warmup streaming.",
+        "name": "n_init_train",
+        "type": "Int"
+    },
+    "max_lag": {
+        "defaultValue": None,
+        "description": "Maximum size to look back in time",
+        "name": "max_lag",
+        "type": "Optional[Int]"
+    },
+    "random_state": {
+        "defaultValue": 42,
+        "description": "Seed for random number generation.",
+        "name": "random_state",
+        "type": "Int"
+    }
+}
+
+
+def damp(params: ParameterConfig = None, skip_pull: bool = False, timeout: Optional[Duration] = None) -> Algorithm:
+    return Algorithm(
+        name="DAMP",
+        main=DockerAdapter(
+            image_name="registry.gitlab.hpi.de/akita/i/damp",
+            skip_pull=skip_pull,
+            timeout=timeout,
+            group_privileges="akita",
+        ),
+        preprocess=None,
+        postprocess=post_DAMP,
+        param_schema=_damp_parameters,
+        param_config=params or ParameterConfig.defaults(),
+        data_as_file=True,
+        training_type=TrainingType.UNSUPERVISED,
+        input_dimensionality=InputDimensionality("multivariate")
+    )
+
+
+"""
 ############## s2gpp
 """
 
@@ -206,6 +262,12 @@ def main():
                 "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')"
             })
         ),
+        damp(
+            params=FixedParameters({
+                "anomaly_window_size": "heuristic:AnomalyLengthHeuristic(agg_type='max')",
+                "n_init_train": "heuristic:ParameterDependenceHeuristic(source_parameter='anomaly_window_size', factor=4.0)"
+            })
+        ),
         dbstream(),
         kmeans(),
         lstm_ad(),
@@ -215,7 +277,7 @@ def main():
     print(f"Selecting {len(algorithms)} algorithms")
 
     print("Configuring algorithms...")
-    configurator.configure(algorithms[2:], perform_search=False)
+    configurator.configure(algorithms[3:], perform_search=False)
 
     print("\nDatasets:")
     print("=====================================================================================")

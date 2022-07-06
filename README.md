@@ -58,6 +58,16 @@ python -m gutenTAG --config-yaml <dataset-name>.yaml [--seed <dataset-seed>] --o
 ## Download Exathlon Dataset
 
 The integrated [Exathlon](https://github.com/exathlonbenchmark/exathlon) [1] datasets can be downloaded [⬇ here](https://owncloud.hpi.de/s/o3U8VrNmC5EV2Sp/download).
+Also download the [⬇ index file](https://owncloud.hpi.de/s/3Cp8Q5H9gn7EVK0/download) that holds the metadata for the datasets and rename it to `datasets.csv`.
+
+Place the files in the data folder as follows:
+
+```yaml
+data:
+  exathlon:
+    multivariate: ...  # this will be extracted from the Exathlon.zip
+    datasets.csv
+```
 
 # Quality Experiment
 

@@ -202,7 +202,7 @@ logging.basicConfig(
 
 random.seed(42)
 np.random.rand(42)
-MAX_CONTAMINATION = 1.0
+MAX_CONTAMINATION = 0.1
 MIN_ANOMALIES = 1
 
 
@@ -241,7 +241,7 @@ def main():
     configurator = AlgorithmConfigurator(config_path="param-config.json")
 
     # Select datasets and algorithms
-    datasets: List[Tuple[str, str]] = dm.select(collection="Exathlon")
+    datasets: List[Tuple[str, str]] = dm.select(collection="Exathlon", max_contamination=MAX_CONTAMINATION, min_anomalies=MIN_ANOMALIES)
     print(f"Selecting {len(datasets)} datasets")
 
     algorithms = [

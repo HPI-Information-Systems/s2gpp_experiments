@@ -7,3 +7,4 @@ anomaly_scores.ts
 TimeEval-algorithms/
 S2Gpp/
 notebooks
+*.egg-info
